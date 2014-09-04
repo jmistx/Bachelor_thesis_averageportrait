@@ -2,9 +2,32 @@
 import os
 import numpy as np
 import cv2
+from math import atan, hypot
 # Galton's portrait
 # good haarcascade_frontalface_alt_tree.xml
 # good haarcascade_frontalface_alt2.xml
+class Eye(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+
+class Transformation(object):
+    def __init__(self):
+        self.angle = 0
+        self.scale = 0
+
+
+class FaceHelper(object):
+    def get_transformation(self, eyes, width=None):
+        transformation = Transformation()
+        eye_vector = Eye(eyes[1].x - eyes[0].x, eyes[1].y - eyes[0].y)
+        if eye_vector.x != 0:
+            transformation.angle = atan(eye_vector.y / eye_vector.x)
+        if width is not None:
+            transformation.scale = width / hypot(eye_vector.x, eye_vector.y)
+        return transformation
+
 
 class FaceProcessor(object):
     def __init__(self):
@@ -27,7 +50,7 @@ class FaceProcessor(object):
         return eyes
 
     def enlarge_area(self, area, percents=0, pixels=0):
-        x, y, w, h = face
+        x, y, w, h = area
         half_w, half_h = w / 2, h / 2
         c_x, c_y = x + half_w, y + half_h
         if percents:
@@ -51,8 +74,8 @@ class FaceProcessor(object):
         img_w, img_h = img.shape[0], img.shape[1]
         assert img_w <= w and img_h <= h
         result = np.zeros((h, w, 3), np.uint8)
-        offset_w = (w - img_w)/2
-        offset_h = (h - img_h)/2
+        offset_w = (w - img_w) / 2
+        offset_h = (h - img_h) / 2
         result[offset_h:offset_h + img_h, offset_w:offset_w + img_w] = img
         return result
 
@@ -69,8 +92,8 @@ class FaceProcessor(object):
             # cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
             eyes = self.get_eyes(roi_gray)
             result.append((roi_color, [(x, y) for (x, y, _, _) in eyes]))
-            # for (ex,ey,ew,eh) in eyes:
-            # cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+            for (ex, ey, ew, eh) in eyes:
+                cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
         return result
 
 
@@ -82,7 +105,7 @@ class FaceProcessor(object):
         max_w = max((f.shape[0] for (f, _) in faces_with_eyes))
 
         rect = (0, 0, min_w, min_h)
-        #return [self.get_rect_from_img(face, rect) for (face, _) in faces_with_eyes]
+        # return [self.get_rect_from_img(face, rect) for (face, _) in faces_with_eyes]
         return [self.scale_and_center_images(face, max_w, max_h) for (face, _) in faces_with_eyes]
 
 
@@ -104,7 +127,7 @@ class FaceProcessor(object):
         for x in np.nditer(image, op_flags=['readwrite']):
             x[...] = x / face_count
 
-        #copy to result image
+        # copy to result image
         for x, y in np.nditer([image, result], op_flags=[['readonly'], ['writeonly']]):
             y[...] = np.uint8(x)
 
@@ -123,8 +146,12 @@ def process_and_show(photos):
     cv2.destroyAllWindows()
 
 
-photos = []
-for arg, _, photos in os.walk(os.path.join(".", "input")):
-    process_and_show([os.path.join(arg, p) for p in photos])
+def main():
+    for arg, _, photos in os.walk(os.path.join(".", "little input")):
+        process_and_show([os.path.join(arg, p) for p in photos])
+
+
+if __name__ == '__main__':
+    main()
 
 
