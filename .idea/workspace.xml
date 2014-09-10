@@ -14,9 +14,9 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Face Recognition$Unittest_FaceHelperShould_test_can_align_eyes.coverage" NAME="Unittest FaceHelperShould.test_can_align_eyes Coverage Results" MODIFIED="1409861430455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Face Recognition$Unittest_TestFaceProcessor_test_eyes_are_aligned.coverage" NAME="Unittest TestFaceProcessor.test_eyes_are_aligned Coverage Results" MODIFIED="1409688723823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Face Recognition$Unittests_in_FaceHelperShould__2_.coverage" NAME="Unittests in FaceHelperShould (2) Coverage Results" MODIFIED="1409863921994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Face Recognition$face_and_eyes.coverage" NAME="face_and_eyes Coverage Results" MODIFIED="1409861336766" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Face Recognition$Unittests_in_test_faceProcessor.coverage" NAME="Unittests in test_faceProcessor Coverage Results" MODIFIED="1409862353099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Face Recognition$face_and_eyes.coverage" NAME="face_and_eyes Coverage Results" MODIFIED="1410387844753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Face Recognition$Unittests_in_FaceHelperShould__2_.coverage" NAME="Unittests in FaceHelperShould (2) Coverage Results" MODIFIED="1410382096192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Face Recognition$Unittests_in_test_faceProcessor.coverage" NAME="Unittests in test_faceProcessor Coverage Results" MODIFIED="1410387022376" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Face Recognition$Unittests_in_FaceHelperShould__3_.coverage" NAME="Unittests in FaceHelperShould (3) Coverage Results" MODIFIED="1409861522521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Face Recognition$Unittest_FaceHelperShould_test_can_align_eyes_negative_angle.coverage" NAME="Unittest FaceHelperShould.test_can_align_eyes_negative_angle Coverage Results" MODIFIED="1409861933663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Face Recognition$Unittests_in_FaceHelperShould__1_.coverage" NAME="Unittests in FaceHelperShould (1) Coverage Results" MODIFIED="1409861890029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -37,27 +37,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="face_and_eyes.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="face_and_eyes.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/face_and_eyes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="1037">
-              <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.6343874" vertical-offset="1345" max-vertical-offset="3094">
+              <caret line="114" column="21" selection-start-line="114" selection-start-column="21" selection-end-line="114" selection-end-column="21" />
               <folding>
                 <element signature="e#25#34#0" expanded="true" />
-                <element signature="e#851#4426#0" expanded="false" />
-                <element signature="e#1287#1357#0" expanded="false" />
-                <element signature="e#1406#1480#0" expanded="false" />
-                <element signature="e#1546#1947#0" expanded="false" />
+                <element signature="e#2229#2299#0" expanded="false" />
+                <element signature="e#2347#2421#0" expanded="false" />
+                <element signature="e#2487#2888#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_faceProcessor.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="test_faceProcessor.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_faceProcessor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9743083" vertical-offset="0" max-vertical-offset="731">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="1496">
+              <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -68,7 +67,7 @@
       <file leaf-file-name="ntpath.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/Python27/Lib/ntpath.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4012" max-vertical-offset="9061">
+            <state vertical-scroll-proportion="0.0" vertical-offset="6664" max-vertical-offset="9061">
               <caret line="242" column="72" selection-start-line="241" selection-start-column="5" selection-end-line="242" selection-end-column="72" />
               <folding />
             </state>
@@ -86,8 +85,8 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/recognition.py" />
-        <option value="$PROJECT_DIR$/face_and_eyes.py" />
         <option value="$PROJECT_DIR$/test_faceProcessor.py" />
+        <option value="$PROJECT_DIR$/face_and_eyes.py" />
       </list>
     </option>
   </component>
@@ -170,7 +169,7 @@
       <recent name="D:\Projects\Face Recognition\averageportrait" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests in FaceHelperShould (2)">
+  <component name="RunManager" selected="Python.face_and_eyes">
     <configuration default="false" name="Unittests in FaceHelperShould (2)" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -187,31 +186,6 @@
       <option name="METHOD_NAME" value="" />
       <option name="FOLDER_NAME" value="" />
       <option name="TEST_TYPE" value="TEST_CLASS" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Unittest FaceHelperShould.test_can_align_eyes_negative_angle" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Face Recognition" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_faceProcessor.py" />
-      <option name="CLASS_NAME" value="FaceHelperShould" />
-      <option name="METHOD_NAME" value="test_can_align_eyes_negative_angle" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_METHOD" />
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
       <option name="PUREUNITTEST" value="true" />
@@ -293,6 +267,27 @@
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="face_and_eyes" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Face Recognition" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/face_and_eyes.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
@@ -448,18 +443,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in FaceHelperShould (2)" />
-      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_can_align_eyes_negative_angle" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_can_scale_eyes" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in test_faceProcessor" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_rotate_and_scale" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_can_scale_eyes" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in test_faceProcessor" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_rotate_and_scale" />
+      <item index="4" class="java.lang.String" itemvalue="Python.face_and_eyes" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in FaceHelperShould (2)" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_rotate_and_scale" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in test_faceProcessor" />
-        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_can_scale_eyes" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_can_align_eyes_negative_angle" />
+        <item index="0" class="java.lang.String" itemvalue="Python.face_and_eyes" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in test_faceProcessor" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests in FaceHelperShould (2)" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_rotate_and_scale" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest FaceHelperShould.test_can_scale_eyes" />
       </list>
     </recent_temporary>
   </component>
@@ -480,13 +475,13 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13480663" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13416009" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32919955" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26266995" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56595266" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39797068" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -517,10 +512,17 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/face_and_eyes.py</url>
+          <line>107</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -530,10 +532,9 @@
           <caret line="124" column="0" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
           <folding>
             <element signature="e#25#34#0" expanded="true" />
-            <element signature="e#851#4426#0" expanded="false" />
-            <element signature="e#1287#1357#0" expanded="false" />
-            <element signature="e#1406#1480#0" expanded="false" />
-            <element signature="e#1546#1947#0" expanded="false" />
+            <element signature="e#2229#2299#0" expanded="false" />
+            <element signature="e#2347#2421#0" expanded="false" />
+            <element signature="e#2487#2888#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -552,10 +553,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#25#34#0" expanded="true" />
-            <element signature="e#851#4426#0" expanded="false" />
-            <element signature="e#1287#1357#0" expanded="false" />
-            <element signature="e#1406#1480#0" expanded="false" />
-            <element signature="e#1546#1947#0" expanded="false" />
+            <element signature="e#2229#2299#0" expanded="false" />
+            <element signature="e#2347#2421#0" expanded="false" />
+            <element signature="e#2487#2888#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -566,11 +566,18 @@
           <caret line="15" column="49" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
           <folding>
             <element signature="e#25#34#0" expanded="true" />
-            <element signature="e#851#4426#0" expanded="false" />
-            <element signature="e#1287#1357#0" expanded="false" />
-            <element signature="e#1406#1480#0" expanded="false" />
-            <element signature="e#1546#1947#0" expanded="false" />
+            <element signature="e#2229#2299#0" expanded="false" />
+            <element signature="e#2347#2421#0" expanded="false" />
+            <element signature="e#2487#2888#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/unittest/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3320158" vertical-offset="614" max-vertical-offset="5321">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -582,26 +589,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/face_and_eyes.py">
+    <entry file="file://$PROJECT_DIR$/test_faceProcessor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="1037">
-          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="1496">
+          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
           <folding>
-            <element signature="e#25#34#0" expanded="true" />
-            <element signature="e#851#4426#0" expanded="false" />
-            <element signature="e#1287#1357#0" expanded="false" />
-            <element signature="e#1406#1480#0" expanded="false" />
-            <element signature="e#1546#1947#0" expanded="false" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_faceProcessor.py">
+    <entry file="file://$PROJECT_DIR$/face_and_eyes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9743083" vertical-offset="0" max-vertical-offset="731">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6343874" vertical-offset="1345" max-vertical-offset="3094">
+          <caret line="114" column="21" selection-start-line="114" selection-start-column="21" selection-end-line="114" selection-end-column="21" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#25#34#0" expanded="true" />
+            <element signature="e#2229#2299#0" expanded="false" />
+            <element signature="e#2347#2421#0" expanded="false" />
+            <element signature="e#2487#2888#0" expanded="false" />
           </folding>
         </state>
       </provider>

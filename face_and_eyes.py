@@ -1,8 +1,9 @@
 # -*- coding: cp1251 -*-
 import os
+import math
 import numpy as np
 import cv2
-from math import atan, hypot
+from math import atan, hypot, pi
 # Galton's portrait
 # good haarcascade_frontalface_alt_tree.xml
 # good haarcascade_frontalface_alt2.xml
@@ -11,19 +12,45 @@ class Eye(object):
         self.x = x
         self.y = y
 
+    def __add__(self, other):
+        return Eye(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other):
+        return Eye(self.x - other.x, self.y - other.y)
+
+    def to_tuple(self):
+        return self.x, self.y
+
+
 
 class Transformation(object):
     def __init__(self):
         self.angle = 0
         self.scale = 0
+        self.translation = (0, 0)
+        self.center = (0, 0)
 
+    def as_matrix(self):
+        angle_in_grads = (self.angle / pi) * 180;
+        matrix = cv2.getRotationMatrix2D(self.center, angle_in_grads, self.scale)
+        #matrix[0, 2] += self.translation[0]
+        #matrix[1, 2] += self.translation[1]
+        return matrix
 
 class FaceHelper(object):
-    def get_transformation(self, eyes, width=None):
+
+    @staticmethod
+    def get_transformation(eyes, width=None, standard_eyes=None):
+        eyes = sorted(eyes, key=lambda eye: eye.x)
         transformation = Transformation()
-        eye_vector = Eye(eyes[1].x - eyes[0].x, eyes[1].y - eyes[0].y)
+        eye_vector = eyes[1] - eyes[0]
         if eye_vector.x != 0:
-            transformation.angle = atan(eye_vector.y / eye_vector.x)
+            transformation.angle = atan(float(eye_vector.y) / eye_vector.x)
+            transformation.center = eyes[0].to_tuple()
+        if standard_eyes:
+            standard_eyes_vector = standard_eyes[1] - standard_eyes[0]
+            width = hypot(standard_eyes_vector.x, standard_eyes_vector.y)
+            transformation.translation = (standard_eyes[0] - eyes[0]).to_tuple()
         if width is not None:
             transformation.scale = width / hypot(eye_vector.x, eye_vector.y)
         return transformation
@@ -43,7 +70,6 @@ class FaceProcessor(object):
     def get_eyes(self, gray_img):
         eyes = self.eye_cascade.detectMultiScale(gray_img)
         return eyes
-
 
     def get_two_eyes(self, gray_img):
         eyes = self.two_eye_cascade.detectMultiScale(gray_img)
@@ -70,13 +96,22 @@ class FaceProcessor(object):
         return img[y:y + h, x:x + w]
 
     @staticmethod
-    def scale_and_center_images(img, w, h):
+    def scale_and_center_images(img, w, h, eyes):
         img_w, img_h = img.shape[0], img.shape[1]
         assert img_w <= w and img_h <= h
         result = np.zeros((h, w, 3), np.uint8)
         offset_w = (w - img_w) / 2
         offset_h = (h - img_h) / 2
         result[offset_h:offset_h + img_h, offset_w:offset_w + img_w] = img
+
+        def rotate(input_img):
+            real_eyes = [Eye(x, y) for x, y in eyes]
+            if len(real_eyes) < 2:
+                return input_img
+            rotation_matrix = FaceHelper.get_transformation(real_eyes, 150).as_matrix()
+            return cv2.warpAffine(input_img, rotation_matrix, (w, h))
+
+        #return rotate(result)
         return result
 
 
@@ -106,7 +141,7 @@ class FaceProcessor(object):
 
         rect = (0, 0, min_w, min_h)
         # return [self.get_rect_from_img(face, rect) for (face, _) in faces_with_eyes]
-        return [self.scale_and_center_images(face, max_w, max_h) for (face, _) in faces_with_eyes]
+        return [self.scale_and_center_images(face, max_w, max_h, eyes) for (face, eyes) in faces_with_eyes]
 
 
     def summ_images(self, faces):
