@@ -2,6 +2,8 @@ from unittest import TestCase
 from face_and_eyes import FaceHelper, Eye
 from math import pi, cos, sin
 
+#notes
+#probably i should do some preprocessing before haars cascade
 
 class FaceHelperShould(TestCase):
     def setUp(self):
