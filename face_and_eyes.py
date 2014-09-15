@@ -111,7 +111,7 @@ class FaceProcessor(object):
         if not images:
             return []
         result = []
-        first_face, first_face_eyes = images[0]
+        first_face = images[0]
         first_face = FaceProcessor.scale_and_center_images(first_face, max_w, max_h)
         first_face_gray = cv2.cvtColor(first_face, cv2.COLOR_BGR2GRAY)
         first_face_eyes = FaceProcessor.get_eyes(first_face_gray)
@@ -121,10 +121,13 @@ class FaceProcessor(object):
         img_w, img_h = first_face.shape[0], first_face.shape[1]
         result.append(cv2.warpAffine(first_face, rotation_matrix, (img_w, img_h)))
 
-        for img, eyes in images[1:]:
+        for img in images[1:]:
             img = FaceProcessor.scale_and_center_images(img, max_w, max_h)
             img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             eyes = FaceProcessor.get_eyes(img_gray)
+
+            for (ex, ey, ew, eh) in eyes:
+                cv2.rectangle(img, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
 
             img_eyes = [Eye(x, y) for x, y, _, _ in eyes]
             transformation = FaceHelper.get_transformation(img_eyes, standard_eyes=real_eyes)
@@ -151,30 +154,25 @@ class FaceProcessor(object):
                 filtered_eyes.append((x, y, w, h))
         return filtered_eyes
 
-    def get_faces_and_eyes(self, path_to_photo):
+    def get_faces_by_path(self, path_to_photo):
         result = []
         img = cv2.imread(path_to_photo)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = self.get_faces(gray)
 
         for face in faces:
-            roi_gray = self.get_rect_from_img(gray, face)
             roi_color = self.get_rect_from_img(img, face)
             # cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
-            eyes = self.get_eyes(roi_gray)
-            result.append((roi_color, [(x, y) for (x, y, _, _) in eyes]))
-            for (ex, ey, ew, eh) in eyes:
-                #cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
-                pass
+            result.append(roi_color)
         return result
 
 
     def prepare_faces(self, faces_with_eyes):
-        min_h = min((f.shape[1] for (f, _) in faces_with_eyes))
-        min_w = min((f.shape[0] for (f, _) in faces_with_eyes))
+        min_h = min((f.shape[1] for f in faces_with_eyes))
+        min_w = min((f.shape[0] for f in faces_with_eyes))
 
-        max_h = max((f.shape[1] for (f, _) in faces_with_eyes))
-        max_w = max((f.shape[0] for (f, _) in faces_with_eyes))
+        max_h = max((f.shape[1] for f in faces_with_eyes))
+        max_w = max((f.shape[0] for f in faces_with_eyes))
 
         rect = (0, 0, min_w, min_h)
         # return [self.get_rect_from_img(face, rect) for (face, _) in faces_with_eyes]
@@ -182,7 +180,7 @@ class FaceProcessor(object):
         return self.scale_and_match_faces_by_eyes(faces_with_eyes, max_w, max_h)
 
 
-    def summ_images(self, faces):
+    def sum_images(self, faces):
         f1 = faces[0]
         image = np.zeros(f1.shape, np.uint64)
         result = np.zeros(f1.shape, np.uint8)
@@ -211,9 +209,9 @@ def process_and_show(photos):
     face_processor = FaceProcessor()
     faces_and_eyes = []
     for photo in photos:
-        faces_and_eyes = faces_and_eyes + face_processor.get_faces_and_eyes(photo)
+        faces_and_eyes = faces_and_eyes + face_processor.get_faces_by_path(photo)
     prepared_faces = face_processor.prepare_faces(faces_and_eyes)
-    face = face_processor.summ_images(prepared_faces)
+    face = face_processor.sum_images(prepared_faces)
     cv2.imshow('img', face)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
