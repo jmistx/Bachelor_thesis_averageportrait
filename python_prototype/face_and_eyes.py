@@ -7,6 +7,15 @@ from math import atan, hypot, pi
 # Galton's portrait
 # good haarcascade_frontalface_alt_tree.xml
 # good haarcascade_frontalface_alt2.xml
+
+
+class Face(object):
+    def __init__(self):
+        self.color_image = None
+        self.gray_image = None
+        self.eyes = None
+
+
 class Eye(object):
     def __init__(self, x, y):
         self.x = x
@@ -20,6 +29,7 @@ class Eye(object):
 
     def to_tuple(self):
         return self.x, self.y
+
 
 class Transformation(object):
     def __init__(self):
@@ -107,29 +117,32 @@ class FaceProcessor(object):
         return result
 
     @staticmethod
+    def get_face(image, max_w, max_h):
+        first_face = FaceProcessor.scale_and_center_images(image, max_w, max_h)
+        first_face_gray = cv2.cvtColor(first_face, cv2.COLOR_BGR2GRAY)
+        first_face_eyes = FaceProcessor.get_eyes(first_face_gray)
+
+        for (ex, ey, ew, eh) in first_face_eyes:
+                cv2.rectangle(first_face, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+
+        real_eyes = [Eye(x, y) for x, y, _, _ in first_face_eyes]
+
+        return first_face, first_face_gray, real_eyes
+
+    @staticmethod
     def scale_and_match_faces_by_eyes(images, max_w, max_h):
         if not images:
             return []
         result = []
-        first_face = images[0]
-        first_face = FaceProcessor.scale_and_center_images(first_face, max_w, max_h)
-        first_face_gray = cv2.cvtColor(first_face, cv2.COLOR_BGR2GRAY)
-        first_face_eyes = FaceProcessor.get_eyes(first_face_gray)
+        first_face, first_face_gray, real_eyes = FaceProcessor.get_face(images[0], max_w, max_h)
 
-        real_eyes = [Eye(x, y) for x, y, _, _ in first_face_eyes]
         rotation_matrix = FaceHelper.get_transformation(real_eyes).as_matrix()
         img_w, img_h = first_face.shape[0], first_face.shape[1]
         result.append(cv2.warpAffine(first_face, rotation_matrix, (img_w, img_h)))
 
         for img in images[1:]:
-            img = FaceProcessor.scale_and_center_images(img, max_w, max_h)
-            img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            eyes = FaceProcessor.get_eyes(img_gray)
+            img, img_gray, img_eyes = FaceProcessor.get_face(img, max_w, max_h)
 
-            for (ex, ey, ew, eh) in eyes:
-                cv2.rectangle(img, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
-
-            img_eyes = [Eye(x, y) for x, y, _, _ in eyes]
             transformation = FaceHelper.get_transformation(img_eyes, standard_eyes=real_eyes)
             rotation_matrix = transformation.as_matrix()
             img = cv2.warpAffine(img, rotation_matrix, (img_w, img_h))
@@ -168,16 +181,11 @@ class FaceProcessor(object):
 
 
     def prepare_faces(self, faces_with_eyes):
-        min_h = min((f.shape[1] for f in faces_with_eyes))
-        min_w = min((f.shape[0] for f in faces_with_eyes))
-
         max_h = max((f.shape[1] for f in faces_with_eyes))
         max_w = max((f.shape[0] for f in faces_with_eyes))
 
-        rect = (0, 0, min_w, min_h)
-        # return [self.get_rect_from_img(face, rect) for (face, _) in faces_with_eyes]
-        #return [self.scale_and_center_images(face, max_w, max_h, eyes) for (face, eyes) in faces_with_eyes]
-        return self.scale_and_match_faces_by_eyes(faces_with_eyes, max_w, max_h)
+        scaled_faces = self.scale_and_match_faces_by_eyes(faces_with_eyes, max_w, max_h)
+        return scaled_faces
 
 
     def sum_images(self, faces):
