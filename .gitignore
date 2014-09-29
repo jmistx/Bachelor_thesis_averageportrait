@@ -1,0 +1,8 @@
+*.pdb
+csharp_product/AveragePortrait/AP.Test/obj/
+csharp_product/AveragePortrait/AP.Gui/bin/
+csharp_product/AveragePortrait/AP.Gui/obj/Debug/AP.Gui.csproj.FileListAbsolute.txt
+csharp_product/AveragePortrait/AP.Gui/obj/
+csharp_product/AveragePortrait/AP.Logic/bin/
+csharp_product/AveragePortrait/AP.Logic/obj/
+csharp_product/AveragePortrait/AP.Test/bin/
