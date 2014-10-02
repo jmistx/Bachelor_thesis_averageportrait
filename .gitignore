@@ -6,3 +6,5 @@ csharp_product/AveragePortrait/AP.Gui/obj/
 csharp_product/AveragePortrait/AP.Logic/bin/
 csharp_product/AveragePortrait/AP.Logic/obj/
 csharp_product/AveragePortrait/AP.Test/bin/
+.idea/
+csharp_product/AveragePortrait/Build/
