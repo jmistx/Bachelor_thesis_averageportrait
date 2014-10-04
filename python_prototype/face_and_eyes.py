@@ -118,16 +118,16 @@ class FaceProcessor(object):
 
     @staticmethod
     def get_face(image, max_w, max_h):
-        first_face = FaceProcessor.scale_and_center_images(image, max_w, max_h)
-        first_face_gray = cv2.cvtColor(first_face, cv2.COLOR_BGR2GRAY)
-        first_face_eyes = FaceProcessor.get_eyes(first_face_gray)
+        face = FaceProcessor.scale_and_center_images(image, max_w, max_h)
+        face_gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
+        eyes = FaceProcessor.get_eyes(face_gray)
 
-        for (ex, ey, ew, eh) in first_face_eyes:
-                cv2.rectangle(first_face, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+        for (ex, ey, ew, eh) in eyes:
+                cv2.rectangle(face, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
 
-        real_eyes = [Eye(x, y) for x, y, _, _ in first_face_eyes]
+        real_eyes = [Eye(x, y) for x, y, _, _ in eyes]
 
-        return first_face, first_face_gray, real_eyes
+        return face, face_gray, real_eyes
 
     @staticmethod
     def scale_and_match_faces_by_eyes(images, max_w, max_h):

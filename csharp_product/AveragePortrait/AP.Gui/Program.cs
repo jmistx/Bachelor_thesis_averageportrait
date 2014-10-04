@@ -1,25 +1,25 @@
-//----------------------------------------------------------------------------
-//  Copyright (C) 2004-2013 by EMGU. All rights reserved.       
-//----------------------------------------------------------------------------
-
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using AP.Logic;
 using Emgu.CV;
 using Emgu.CV.Structure;
-using Emgu.CV.UI;
 
-namespace FaceDetection
+namespace AP.Gui
 {
     public static class Program
     {
         public static Image<Bgr, Byte> Run()
         {
-            var image = new Image<Bgr, byte>(@"lena.jpg");
+            var images = Directory.GetFiles("images", "*.jpg");
+            var image = new Image<Bgr, byte>(images[0]);
             long detectionTime;
             var faces = new List<Rectangle>();
             var eyes = new List<Rectangle>();
-            DetectFace.Detect(image, "haarcascade_frontalface_default.xml", "haarcascade_eye.xml", faces, eyes,
+            var faceProcessor = new FaceProcessor();
+            image = faceProcessor.ScaleImages(image, 600, 600);
+            DetectFace.Detect(image, "haarcascade_frontalface_alt2.xml", "haarcascade_eye.xml", faces, eyes,
                 out detectionTime);
             foreach (Rectangle face in faces)
                 image.Draw(face, new Bgr(Color.Red), 2);

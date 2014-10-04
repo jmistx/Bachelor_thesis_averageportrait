@@ -14,7 +14,6 @@ namespace AP.Test
         [Test]
         public void HasEyes()
         {
-            var face = new Face();
         }
     }
 }
