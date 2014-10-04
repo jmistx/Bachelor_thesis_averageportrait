@@ -40,23 +40,8 @@
     <Reference Include="Emgu.CV">
       <HintPath>..\packages\EmguCV\Emgu.CV.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.GPU">
-      <HintPath>..\packages\EmguCV\Emgu.CV.GPU.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.ML">
-      <HintPath>..\packages\EmguCV\Emgu.CV.ML.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.OCR">
-      <HintPath>..\packages\EmguCV\Emgu.CV.OCR.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.OpenCL">
-      <HintPath>..\packages\EmguCV\Emgu.CV.OpenCL.dll</HintPath>
-    </Reference>
     <Reference Include="Emgu.CV.UI">
       <HintPath>..\packages\EmguCV\Emgu.CV.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.VideoStab">
-      <HintPath>..\packages\EmguCV\Emgu.CV.VideoStab.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.Util">
       <HintPath>..\packages\EmguCV\Emgu.Util.dll</HintPath>
@@ -91,7 +76,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BitmapSourceConverter.cs" />
-    <Compile Include="DetectFace.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -126,17 +110,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="lena.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="haarcascade_eye.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="haarcascade_frontalface_default.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\AP.Logic\AP.Logic.csproj">
+      <Project>{fef71ecd-3fe3-4027-bba0-5748903cc6b6}</Project>
+      <Name>AP.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Emgu.CV;
-using Emgu.CV.GPU;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
 
@@ -16,10 +15,7 @@ namespace FaceDetection
     {
         public static Image<Bgr, Byte> Run()
         {
-            var image =
-                new Image<Bgr, byte>(
-                    @"D:\Projects\Face Recognition\averageportrait\csharp_product\AveragePortrait\AP.Gui\lena.jpg");
-                //Read the files as an 8-bit Bgr image  
+            var image = new Image<Bgr, byte>(@"lena.jpg");
             long detectionTime;
             var faces = new List<Rectangle>();
             var eyes = new List<Rectangle>();
