@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -11,10 +12,30 @@ namespace AP.Logic
     public class FaceProcessor
     {
         public CascadeClassifier Face { get; set; }
+        public CascadeClassifier Eye { get; set; }
+        public CascadeClassifier EyePair { get; set; }
         public FaceProcessor()
         {
             const string faceCascade = "haarcascade_frontalface_alt2.xml";
+            const string eyeCascade = "haarcascade_eye.xml";
+            const string eyePairCascade = "haarcascade_mcs_eyepair_big.xml";
+
             Face = new CascadeClassifier(faceCascade);
+            Eye = new CascadeClassifier(eyeCascade);
+            EyePair = new CascadeClassifier(eyePairCascade);
+        }
+
+        public IList<Rectangle> GetEyes(Image<Bgr, byte> face)
+        {
+            using (var gray = face.Convert<Gray, Byte>())
+            {
+                //var pairs = EyePair.DetectMultiScale(gray, 1.1, 10, new Size(20, 20), Size.Empty);
+                //var pair = pairs.Single();
+                //pair.Inflate(50, 50);
+                //gray.ROI = pair;
+                var eyes = Eye.DetectMultiScale(gray, 1.1, 10, new Size(20, 20), Size.Empty);
+                return eyes;
+            }
         }
 
         public IList<Rectangle> GetFaces(Image<Bgr, Byte> image)

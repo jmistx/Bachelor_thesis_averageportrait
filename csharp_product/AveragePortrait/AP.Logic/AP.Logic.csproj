@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AverageFace.cs" />
     <Compile Include="DetectFace.cs" />
     <Compile Include="FaceProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,7 +86,9 @@
     <None Include="haarcascade_frontalface_alt2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="haarcascade_mcs_eyepair_big.xml" />
+    <None Include="haarcascade_mcs_eyepair_big.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
