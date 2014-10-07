@@ -27,7 +27,7 @@ namespace AP.Gui
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            var image = Program.Run();
+            var image = Program.MakeAveragePortrait();
             image1.Source = BitmapSourceConvert.ToBitmapSource(image);
         }
     }

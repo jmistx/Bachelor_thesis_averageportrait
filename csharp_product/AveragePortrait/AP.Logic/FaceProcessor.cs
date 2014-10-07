@@ -25,17 +25,31 @@ namespace AP.Logic
             EyePair = new CascadeClassifier(eyePairCascade);
         }
 
-        public IList<Rectangle> GetEyes(Image<Bgr, byte> face)
+        public IList<Rectangle> GetEyes(Image<Bgr, byte> image, Rectangle face)
         {
-            using (var gray = face.Convert<Gray, Byte>())
+            image.ROI = face;
+            using (var gray = image.Convert<Gray, Byte>())
             {
-                //var pairs = EyePair.DetectMultiScale(gray, 1.1, 10, new Size(20, 20), Size.Empty);
-                //var pair = pairs.Single();
-                //pair.Inflate(50, 50);
-                //gray.ROI = pair;
+                var pairs = EyePair.DetectMultiScale(gray, 1.1, 10, new Size(20, 20), Size.Empty);
+                var pair = pairs.Single();
                 var eyes = Eye.DetectMultiScale(gray, 1.1, 10, new Size(20, 20), Size.Empty);
-                return eyes;
+                var filteredEyes = eyes.Where(_ => ContainEye(pair, _)).ToList();
+                var offsetedEyes = filteredEyes.Select(_ => OffsetEye(face, _)).ToList();
+                image.ROI = Rectangle.Empty;
+                return offsetedEyes;
             }
+        }
+
+        private static Rectangle OffsetEye(Rectangle face, Rectangle eye)
+        {
+            return new Rectangle(face.X + eye.X, face.Y + eye.Y, eye.Width, eye.Height);
+        }
+
+
+        private bool ContainEye(Rectangle pair, Rectangle eye)
+        {
+            var eyeCenter = new Point(eye.X + eye.Width/2, eye.Y + eye.Height/2);
+            return pair.Contains(eyeCenter);
         }
 
         public IList<Rectangle> GetFaces(Image<Bgr, Byte> image)

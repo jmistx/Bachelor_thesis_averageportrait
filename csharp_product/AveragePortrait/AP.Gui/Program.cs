@@ -12,7 +12,7 @@ namespace AP.Gui
 {
     public static class Program
     {
-        public static Image<Bgr, Int32> Run()
+        public static Image<Bgr, Int32> MakeAveragePortrait(bool cropFace = true)
         {
             var averageFace = new AverageFace(600, 600);
             var faceProcessor = new FaceProcessor();
@@ -23,16 +23,23 @@ namespace AP.Gui
             {
                 var image = new Image<Bgr, byte>(imagePath);
 
-                IList<Rectangle> faces;// = new List<Rectangle>();
-                //var eyes = new List<Rectangle>();
-
-                faces = faceProcessor.GetFaces(image);
+                IList<Rectangle> faces = faceProcessor.GetFaces(image);
                 var face = faces.Single();
-                var faceImage = faceProcessor.GetRectFromImage(image, face);
 
-                var eyes = faceProcessor.GetEyes(faceImage);
+                Image<Bgr, byte> faceImage = null;
 
-                //DetectFace.Detect(image, "haarcascade_frontalface_alt2.xml", "haarcascade_eye.xml", faces, eyes);
+                if (cropFace)
+                {
+                    faceImage = faceProcessor.GetRectFromImage(image, face);
+                    face = Rectangle.Empty;
+                }
+                else
+                {
+                    faceImage = image;
+                }
+
+                var eyes = faceProcessor.GetEyes(faceImage, face);
+
                 foreach (Rectangle eye in eyes)
                     faceImage.Draw(eye, new Bgr(Color.Red), 2);
 
