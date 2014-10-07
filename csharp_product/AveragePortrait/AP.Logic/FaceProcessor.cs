@@ -41,7 +41,7 @@ namespace AP.Logic
             return image.GetSubRect(rectangle);
         }
 
-        public Image<Bgr, Byte> ScaleImages(Image<Bgr, Byte> image, int w, int h)
+        public Image<Bgr, Byte> IncreaseImageSize(Image<Bgr, Byte> image, int w, int h)
         {
             var scaledImage = new Image<Bgr, Byte>(w, h, new Bgr(Color.Black));
             if (image.Width > w || image.Height > h)

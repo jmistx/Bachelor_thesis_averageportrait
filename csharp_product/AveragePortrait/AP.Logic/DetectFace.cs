@@ -13,7 +13,7 @@ namespace AP.Logic
     public static class DetectFace
     {
         public static void Detect(Image<Bgr, Byte> image, String faceFileName, String eyeFileName, List<Rectangle> faces,
-            List<Rectangle> eyes, out long detectionTime)
+            List<Rectangle> eyes)
         {
             //Read the HaarCascade objects
             using (var face = new CascadeClassifier(faceFileName))
@@ -56,7 +56,6 @@ namespace AP.Logic
                     }
                 }
             }
-            detectionTime = 0;
         }
     }
 }
