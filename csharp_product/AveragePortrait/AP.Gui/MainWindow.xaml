@@ -1,7 +1,12 @@
 ﻿<Window x:Class="AP.Gui.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="600" Width="700" Loaded="Window_Loaded_1">
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        Title="MainWindow" Height="600" Width="700" Loaded="Window_Loaded_1"
+        xmlns:gui="clr-namespace:AP.Gui"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=gui:MainWindowViewModel}">
     <Grid>
         <Image Name="image1" Stretch="None" Source="{Binding AverageFaceResult}"/>
     </Grid>
