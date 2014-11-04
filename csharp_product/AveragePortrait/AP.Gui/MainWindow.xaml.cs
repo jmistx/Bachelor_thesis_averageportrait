@@ -20,15 +20,21 @@ namespace AP.Gui
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel ViewModel
+        {
+            get { return DataContext as MainWindowViewModel; }
+            set { DataContext = value; }
+            
+        }
         public MainWindow()
         {
             InitializeComponent();
+            ViewModel = new MainWindowViewModel();
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            var image = Program.MakeAveragePortrait();
-            image1.Source = BitmapSourceConvert.ToBitmapSource(image);
+            ViewModel.MakeAveragePortrait();
         }
     }
 }
