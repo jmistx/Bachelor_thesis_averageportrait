@@ -18,6 +18,7 @@
                     <StackPanel>
                         <Image Source="{Binding Tumbnail}" />
                         <ListView ItemsSource="{Binding Face.Eyes}"></ListView>
+                        <TextBlock Text="{Binding Face.Transformation.AngleInDegrees}" ></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

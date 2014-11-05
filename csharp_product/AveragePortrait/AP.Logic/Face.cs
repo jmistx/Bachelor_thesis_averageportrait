@@ -42,13 +42,13 @@ namespace AP.Logic
             foreach (var eye in Eyes)
                 FaceBitmap.Draw(new Rectangle((int)(eye.X - 10), (int)(eye.Y - 10), 20, 20), new Bgr(Color.Red), 2);
 
-            var transform = Transformation.Construct(Eyes, standardEyes);
-            var rotationMatrix = transform.AsMatrix<float>();
+            Transformation = Transformation.Construct(Eyes, standardEyes);
+            var rotationMatrix = Transformation.AsMatrix<float>();
             FaceBitmap = FaceBitmap.WarpAffine(rotationMatrix, 600, 600, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
             var translationMatrix = new Matrix<float>(new float[,]
                 {
-                    {1, 0, transform.Translation.X},
-                    {0, 1, transform.Translation.Y}
+                    {1, 0, Transformation.Translation.X},
+                    {0, 1, Transformation.Translation.Y}
                 });
             FaceBitmap = FaceBitmap.WarpAffine(translationMatrix, 600, 600, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
             FaceBitmap = faceProcessor.IncreaseImageSize(FaceBitmap, 600, 600);
@@ -58,6 +58,7 @@ namespace AP.Logic
         public Image<Bgr, byte> OriginalBitmap { get; set; }
         public Image<Bgr, byte> Thumbnail { get; set; }
         public Image<Bgr, byte> FaceBitmap { get; set; }
+        public Transformation Transformation { get; set; }
         public List<Eye> Eyes { get; set; }
     }
 }

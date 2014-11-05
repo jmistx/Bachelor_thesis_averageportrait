@@ -42,7 +42,7 @@ namespace AP.Logic
 
         public double AngleInDegrees
         {
-            get { return 180 * Angle/Math.PI; }
+            get { return (180 * Angle)/Math.PI; }
         }
 
         public double Scale { get; set; }
@@ -51,7 +51,7 @@ namespace AP.Logic
 
         public Matrix<T> AsMatrix<T>() where T : struct
         {
-            var matrix = new Emgu.CV.RotationMatrix2D<T>(Center, Angle, Scale);
+            var matrix = new Emgu.CV.RotationMatrix2D<T>(Center, AngleInDegrees, Scale);
             return matrix;
         }
     }
