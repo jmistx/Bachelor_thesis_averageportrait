@@ -35,5 +35,10 @@ namespace AP.Logic
         {
             return new PointF(X, Y);
         }
+
+        public override string ToString()
+        {
+            return string.Format("{{X = {0}}} Y = {1}}}", X, Y);
+        }
     }
 }

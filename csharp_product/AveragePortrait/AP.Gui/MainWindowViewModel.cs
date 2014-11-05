@@ -16,14 +16,14 @@ namespace AP.Gui
     {
         public BitmapSource AverageFaceResult { get; set; }
 
-        public IList<BitmapSource> Thumbnails { get; set; }
+        public IList<FaceViewModel> Faces { get; set; }
 
         public void MakeAveragePortrait()
         {
-            Thumbnails = new List<BitmapSource>();
+            Faces = new List<FaceViewModel>();
             CreateAveragePortrait();
             RaisePropertyChanged("AverageFaceResult");
-            RaisePropertyChanged("Thumbnails");
+            RaisePropertyChanged("Faces");
         }
 
         private void CreateAveragePortrait(bool cropFace = false)
@@ -45,8 +45,20 @@ namespace AP.Gui
             AverageFaceResult = BitmapSourceConvert.ToBitmapSource(averageFace.Result);
             foreach (var face in faces)
             {
-                Thumbnails.Add(BitmapSourceConvert.ToBitmapSource(face.Thumbnail));
+                Faces.Add(new FaceViewModel(face));
             }
+        }
+    }
+
+    public class FaceViewModel
+    {
+        public Face Face { get; set; }
+        public BitmapSource Tumbnail { get; set; }
+
+        public FaceViewModel(Face face)
+        {
+            Face = face;
+            Tumbnail = BitmapSourceConvert.ToBitmapSource(face.Thumbnail);
         }
     }
 }

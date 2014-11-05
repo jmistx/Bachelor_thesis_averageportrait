@@ -9,14 +9,15 @@
         d:DataContext="{d:DesignInstance Type=gui:MainWindowViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" ItemsSource="{Binding Thumbnails}" >
+        <ListView Grid.Column="0" ItemsSource="{Binding Faces}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Image Source="{Binding}" />
+                        <Image Source="{Binding Tumbnail}" />
+                        <ListView ItemsSource="{Binding Face.Eyes}"></ListView>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
