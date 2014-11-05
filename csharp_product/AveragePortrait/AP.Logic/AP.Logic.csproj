@@ -67,7 +67,7 @@
     <Compile Include="AverageFace.cs" />
     <Compile Include="Eye.cs" />
     <Compile Include="FaceProcessor.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Face.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transformation.cs" />
   </ItemGroup>

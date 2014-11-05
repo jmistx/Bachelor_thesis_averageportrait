@@ -8,6 +8,19 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=gui:MainWindowViewModel}">
     <Grid>
-        <Image Name="image1" Stretch="None" Source="{Binding AverageFaceResult}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" ItemsSource="{Binding Thumbnails}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Source="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Image  Grid.Column="1" Stretch="None" Source="{Binding AverageFaceResult}"/>
     </Grid>
 </Window>
