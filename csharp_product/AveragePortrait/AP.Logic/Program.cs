@@ -1,18 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms.VisualStyles;
-using AP.Logic;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
-namespace AP.Gui
+namespace AP.Logic
 {
     public static class Program
     {
-        public static Image<Bgr, Int32> MakeAveragePortrait(bool cropFace = true)
+        public static Image<Bgr, int> MakeAveragePortrait(bool cropFace = true)
         {
             var averageFace = new AverageFace(600, 600);
             var faceProcessor = new FaceProcessor();

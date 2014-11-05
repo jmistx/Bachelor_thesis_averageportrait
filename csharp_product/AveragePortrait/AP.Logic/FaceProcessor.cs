@@ -4,7 +4,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using Emgu.CV;
-using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 
 namespace AP.Logic
@@ -14,6 +13,7 @@ namespace AP.Logic
         public CascadeClassifier Face { get; set; }
         public CascadeClassifier Eye { get; set; }
         public CascadeClassifier EyePair { get; set; }
+
         public FaceProcessor()
         {
             const string faceCascade = "haarcascade_frontalface_alt2.xml";
