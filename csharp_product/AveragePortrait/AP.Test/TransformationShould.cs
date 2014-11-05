@@ -125,7 +125,7 @@ namespace AP.Test
             };
 
             var transformation = Transformation.Construct(eyes, standardEyes: standardEyes);
-            transformation.AsMatrix();
+            transformation.AsMatrix<float>();
             //Assert???!!!
         }
     }

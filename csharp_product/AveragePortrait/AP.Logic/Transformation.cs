@@ -49,9 +49,9 @@ namespace AP.Logic
         public PointF Center { get; set; }
         public PointF Translation { get; set; }
 
-        public Matrix<float> AsMatrix()
+        public Matrix<T> AsMatrix<T>() where T : struct
         {
-            var matrix = new Emgu.CV.RotationMatrix2D<float>(Center, Angle, Scale);
+            var matrix = new Emgu.CV.RotationMatrix2D<T>(Center, Angle, Scale);
             return matrix;
         }
     }
