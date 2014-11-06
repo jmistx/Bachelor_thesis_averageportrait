@@ -12,17 +12,30 @@
             <ColumnDefinition Width="250"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" ItemsSource="{Binding Faces}" ScrollViewer.CanContentScroll="False">
-            <ListView.ItemTemplate >
-                <DataTemplate>
-                    <StackPanel >
-                        <Image Source="{Binding Tumbnail}" />
-                        <ListView ItemsSource="{Binding Face.Eyes}"></ListView>
-                        <TextBlock Text="{Binding Face.Transformation.AngleInDegrees}" ></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Image  Grid.Column="1" Stretch="None" Source="{Binding AverageFaceResult}"/>
+        <ScrollViewer Grid.Column="0">
+            <StackPanel>
+                <Button Command="{Binding OpenPhotosCommand}">Выбрать фотографии</Button>
+                <ListView ItemsSource="{Binding Faces}">
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <StackPanel>
+                                <Image Source="{Binding Tumbnail}" />
+                                <ListView ItemsSource="{Binding Face.Eyes}"></ListView>
+                                <TextBlock Text="{Binding Face.Transformation.AngleInDegrees}" ></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
+        <TabControl Grid.Column="1" >
+            <TabItem Header="Current Image">
+                <!--<Image  Stretch="None" Source="{Binding AverageFaceResult}"/>-->
+            </TabItem>
+            <TabItem Header="Result">
+                <Image  Stretch="None" Source="{Binding AverageFaceResult}"/>
+            </TabItem>    
+        </TabControl>
+        
     </Grid>
 </Window>

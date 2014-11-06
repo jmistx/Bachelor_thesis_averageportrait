@@ -21,7 +21,6 @@ namespace AP.Gui
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            ViewModel.MakeAveragePortrait();
         }
     }
 }

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls.Primitives;
+using System.Windows.Forms.VisualStyles;
+using System.Windows.Input;
 using AP.Logic;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Microsoft.TeamFoundation.MVVM;
 using System.Windows.Media.Imaging;
 using Emgu.CV.WPF;
+using Microsoft.Win32;
 
 namespace AP.Gui
 {
@@ -18,18 +21,18 @@ namespace AP.Gui
 
         public IList<FaceViewModel> Faces { get; set; }
 
-        public void MakeAveragePortrait()
+        public ICommand OpenPhotosCommand { get; set; }
+
+        public MainWindowViewModel()
         {
-            Faces = new List<FaceViewModel>();
-            CreateAveragePortrait();
-            RaisePropertyChanged("AverageFaceResult");
-            RaisePropertyChanged("Faces");
+            OpenPhotosCommand = new RelayCommand(OpenPhotos);
         }
 
-        private void CreateAveragePortrait(bool cropFace = false)
+        public void MakeAveragePortrait(string[] images, bool cropFace = false)
         {
+            Faces = new List<FaceViewModel>();
             var averageFace = new AverageFace(600, 600);
-            var images = Directory.GetFiles("images", "*.jpg");
+
             var faceProcessor = new FaceProcessor();
             var standardEyes = new List<Eye>
                 {
@@ -47,6 +50,18 @@ namespace AP.Gui
             {
                 Faces.Add(new FaceViewModel(face));
             }
+            RaisePropertyChanged("AverageFaceResult");
+            RaisePropertyChanged("Faces");
+        }
+
+        private void OpenPhotos()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            openFileDialog.ShowDialog();
+            var images = openFileDialog.FileNames;
+            MakeAveragePortrait(images);
+            //var images = Directory.GetFiles("images", "*.jpg");
         }
     }
 
