@@ -12,10 +12,10 @@
             <ColumnDefinition Width="250"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" ItemsSource="{Binding Faces}" >
-            <ListView.ItemTemplate>
+        <ListView Grid.Column="0" ItemsSource="{Binding Faces}" ScrollViewer.CanContentScroll="False">
+            <ListView.ItemTemplate >
                 <DataTemplate>
-                    <StackPanel>
+                    <StackPanel >
                         <Image Source="{Binding Tumbnail}" />
                         <ListView ItemsSource="{Binding Face.Eyes}"></ListView>
                         <TextBlock Text="{Binding Face.Transformation.AngleInDegrees}" ></TextBlock>
