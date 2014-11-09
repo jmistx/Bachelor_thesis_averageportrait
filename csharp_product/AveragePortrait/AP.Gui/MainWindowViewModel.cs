@@ -23,9 +23,12 @@ namespace AP.Gui
 
         public ICommand OpenPhotosCommand { get; set; }
 
+        public ICommand PrepareAveragePortraitCommand { get; set; }
+
         public MainWindowViewModel()
         {
             OpenPhotosCommand = new RelayCommand(OpenPhotos);
+            PrepareAveragePortraitCommand = new RelayCommand(PrepareAveragePortrait);
         }
 
         public void MakeAveragePortrait(string[] images, bool cropFace = false)
@@ -60,8 +63,41 @@ namespace AP.Gui
             openFileDialog.Multiselect = true;
             openFileDialog.ShowDialog();
             var images = openFileDialog.FileNames;
-            MakeAveragePortrait(images);
-            //var images = Directory.GetFiles("images", "*.jpg");
+
+            LoadFaces(images);
+        }
+
+        private void LoadFaces(string[] images, bool cropFace = false)
+        {
+            Faces = new List<FaceViewModel>();
+            
+            var faceProcessor = new FaceProcessor();
+            
+            var standardEyes = new List<Eye>
+                {
+                    new Eye {X = 200, Y = 200},
+                    new Eye {X = 250, Y = 300}
+                };
+            var faces = images.Select(image => new Face(faceProcessor, image, standardEyes, cropFace)).ToList();
+            
+            foreach (var face in faces)
+            {
+                Faces.Add(new FaceViewModel(face));
+            }
+
+            RaisePropertyChanged("Faces");
+        }
+
+        private void PrepareAveragePortrait()
+        {
+            var averageFace = new AverageFace(600, 600);
+            foreach (var face in Faces)
+            {
+                averageFace.Add(face.Face.FaceBitmap);
+            }
+            averageFace.MakeAverage();
+            AverageFaceResult = BitmapSourceConvert.ToBitmapSource(averageFace.Result);
+            RaisePropertyChanged("AverageFaceResult");
         }
     }
 
