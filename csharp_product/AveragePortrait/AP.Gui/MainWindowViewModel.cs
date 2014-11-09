@@ -19,7 +19,9 @@ namespace AP.Gui
     {
         public BitmapSource AverageFaceResult { get; set; }
 
-        public IList<FaceViewModel> Faces { get; set; }
+        public List<Face> Faces { get; set; }
+
+        public IList<FaceViewModel> FacesViewModel { get; set; }
 
         public ICommand OpenPhotosCommand { get; set; }
 
@@ -29,32 +31,6 @@ namespace AP.Gui
         {
             OpenPhotosCommand = new RelayCommand(OpenPhotos);
             PrepareAveragePortraitCommand = new RelayCommand(PrepareAveragePortrait);
-        }
-
-        public void MakeAveragePortrait(string[] images, bool cropFace = false)
-        {
-            Faces = new List<FaceViewModel>();
-            var averageFace = new AverageFace(600, 600);
-
-            var faceProcessor = new FaceProcessor();
-            var standardEyes = new List<Eye>
-                {
-                    new Eye {X = 200, Y = 200},
-                    new Eye {X = 250, Y = 300}
-                };
-            var faces = images.Select(image => new Face(faceProcessor, image, standardEyes, cropFace)).ToList();
-            foreach (var face in faces)
-            {
-                averageFace.Add(face.FaceBitmap);
-            }
-            averageFace.MakeAverage();
-            AverageFaceResult = BitmapSourceConvert.ToBitmapSource(averageFace.Result);
-            foreach (var face in faces)
-            {
-                Faces.Add(new FaceViewModel(face));
-            }
-            RaisePropertyChanged("AverageFaceResult");
-            RaisePropertyChanged("Faces");
         }
 
         private void OpenPhotos()
@@ -69,33 +45,28 @@ namespace AP.Gui
 
         private void LoadFaces(string[] images, bool cropFace = false)
         {
-            Faces = new List<FaceViewModel>();
-            
+            FacesViewModel = new List<FaceViewModel>();
+
             var faceProcessor = new FaceProcessor();
+            Faces = images.Select(image => new Face(faceProcessor, image, cropFace)).ToList();
             
+            foreach (var face in Faces)
+            {
+                FacesViewModel.Add(new FaceViewModel(face));
+            }
+
+            RaisePropertyChanged("FacesViewModel");
+        }
+
+        private void PrepareAveragePortrait()
+        {
+            var averageFace = new AverageFace(900, 600);
             var standardEyes = new List<Eye>
                 {
                     new Eye {X = 200, Y = 200},
                     new Eye {X = 250, Y = 300}
                 };
-            var faces = images.Select(image => new Face(faceProcessor, image, standardEyes, cropFace)).ToList();
-            
-            foreach (var face in faces)
-            {
-                Faces.Add(new FaceViewModel(face));
-            }
-
-            RaisePropertyChanged("Faces");
-        }
-
-        private void PrepareAveragePortrait()
-        {
-            var averageFace = new AverageFace(600, 600);
-            foreach (var face in Faces)
-            {
-                averageFace.Add(face.Face.FaceBitmap);
-            }
-            averageFace.MakeAverage();
+            averageFace.MakeAverage(FacesViewModel.Select(_ => _.Face).ToList(), standardEyes);
             AverageFaceResult = BitmapSourceConvert.ToBitmapSource(averageFace.Result);
             RaisePropertyChanged("AverageFaceResult");
         }

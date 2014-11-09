@@ -16,7 +16,7 @@
             <StackPanel>
                 <Button Command="{Binding OpenPhotosCommand}">Выбрать фотографии</Button>
                 <Button Command="{Binding PrepareAveragePortraitCommand}">Построить портрет</Button>
-                <ListView ItemsSource="{Binding Faces}">
+                <ListView ItemsSource="{Binding FacesViewModel}">
                     <ListView.ItemTemplate >
                         <DataTemplate>
                             <StackPanel>

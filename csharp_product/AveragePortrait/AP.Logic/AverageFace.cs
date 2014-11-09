@@ -1,16 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
 using Emgu.CV;
+using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 
 namespace AP.Logic
 {
     public class AverageFace
     {
+        private readonly int _width;
+        private readonly int _height;
         private int _count;
         public Image<Bgr, int> Result { get; private set; }
+
         public AverageFace(int width, int height)
         {
-            Result = new Image<Bgr, int>(width, height);
+            _width = width;
+            _height = height;
+            Result = new Image<Bgr, int>(_width, _height);
             _count = 0;
+        }
+
+        public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes)
+        {
+            foreach (var face in faces)
+            {
+                var transformation = Transformation.Construct(face.Eyes, standardEyes);
+                var rotationMatrix = transformation.AsMatrix<float>();
+                var faceBitmap = face.FaceBitmap.WarpAffine(rotationMatrix, _width, _height, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
+                var translationMatrix = new Matrix<float>(new float[,]
+                {
+                    {1, 0, transformation.Translation.X},
+                    {0, 1, transformation.Translation.Y}
+                });
+                faceBitmap = faceBitmap.WarpAffine(translationMatrix, _width, _height, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
+                Add(faceBitmap);
+            }
         }
 
         public void Add(Image<Bgr, byte> image)
