@@ -22,12 +22,21 @@ namespace AP.Logic
             _count = 0;
         }
 
-        public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes)
+        private void DrawEyes(Face face)
+        {
+            foreach (var eye in face.Eyes)
+                face.FaceBitmap.Draw(new Rectangle((int)(eye.X - 10), (int)(eye.Y - 10), 20, 20), new Bgr(Color.Red), 2);
+        }
+
+        public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false)
         {
             foreach (var face in faces)
             {
                 var transformation = Transformation.Construct(leftEye: face.LeftEye, rightEye: face.RightEye, standardEyes: standardEyes);
                 var rotationMatrix = transformation.AsMatrix<float>();
+                
+                if (drawEyes) DrawEyes(face);
+
                 var faceBitmap = face.FaceBitmap.WarpAffine(rotationMatrix, _width, _height, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
                 var translationMatrix = new Matrix<float>(new float[,]
                 {

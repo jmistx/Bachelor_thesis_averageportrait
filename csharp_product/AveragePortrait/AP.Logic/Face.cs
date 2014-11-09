@@ -41,9 +41,6 @@ namespace AP.Logic
 
             LeftEye = Eyes.ElementAtOrDefault(0);
             RightEye = Eyes.ElementAtOrDefault(1);
-
-            foreach (var eye in Eyes)
-                FaceBitmap.Draw(new Rectangle((int)(eye.X - 10), (int)(eye.Y - 10), 20, 20), new Bgr(Color.Red), 2);
         }
         public Eye LeftEye { get; set; }
         public Eye RightEye { get; set; } 
