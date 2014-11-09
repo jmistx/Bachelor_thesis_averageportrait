@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace AP.Gui
 {
@@ -21,6 +22,13 @@ namespace AP.Gui
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void ThumbnailsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var items = e.AddedItems;
+            var face = items[0] as FaceViewModel;
+            ViewModel.SelectFaceForEdit(face);
         }
     }
 }

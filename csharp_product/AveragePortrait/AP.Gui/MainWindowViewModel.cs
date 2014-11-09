@@ -19,6 +19,8 @@ namespace AP.Gui
     {
         public BitmapSource AverageFaceResult { get; set; }
 
+        public FaceViewModel CurrentFaceViewModel { get; set; }
+
         public List<Face> Faces { get; set; }
 
         public IList<FaceViewModel> FacesViewModel { get; set; }
@@ -35,15 +37,14 @@ namespace AP.Gui
 
         private void OpenPhotos()
         {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
+            var openFileDialog = new OpenFileDialog {Multiselect = true};
             openFileDialog.ShowDialog();
             var images = openFileDialog.FileNames;
 
             LoadFaces(images);
         }
 
-        private void LoadFaces(string[] images, bool cropFace = false)
+        private void LoadFaces(IEnumerable<string> images, bool cropFace = false)
         {
             FacesViewModel = new List<FaceViewModel>();
 
@@ -60,15 +61,21 @@ namespace AP.Gui
 
         private void PrepareAveragePortrait()
         {
-            var averageFace = new AverageFace(900, 600);
+            var averageFace = new AverageFace(600, 600);
             var standardEyes = new List<Eye>
                 {
                     new Eye {X = 200, Y = 200},
                     new Eye {X = 250, Y = 300}
                 };
-            averageFace.MakeAverage(FacesViewModel.Select(_ => _.Face).ToList(), standardEyes);
+            averageFace.MakeAverage(Faces, standardEyes);
             AverageFaceResult = BitmapSourceConvert.ToBitmapSource(averageFace.Result);
             RaisePropertyChanged("AverageFaceResult");
+        }
+
+        public void SelectFaceForEdit(FaceViewModel face)
+        {
+            CurrentFaceViewModel = face;
+            RaisePropertyChanged("CurrentFaceViewModel");
         }
     }
 
@@ -76,11 +83,13 @@ namespace AP.Gui
     {
         public Face Face { get; set; }
         public BitmapSource Tumbnail { get; set; }
+        public BitmapSource Picture { get; set; }
 
         public FaceViewModel(Face face)
         {
             Face = face;
             Tumbnail = BitmapSourceConvert.ToBitmapSource(face.Thumbnail);
+            Picture = BitmapSourceConvert.ToBitmapSource(face.FaceBitmap);
         }
     }
 }

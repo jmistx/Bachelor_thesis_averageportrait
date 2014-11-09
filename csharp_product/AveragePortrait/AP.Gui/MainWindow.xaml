@@ -16,7 +16,7 @@
             <StackPanel>
                 <Button Command="{Binding OpenPhotosCommand}">Выбрать фотографии</Button>
                 <Button Command="{Binding PrepareAveragePortraitCommand}">Построить портрет</Button>
-                <ListView ItemsSource="{Binding FacesViewModel}">
+                <ListView ItemsSource="{Binding FacesViewModel}" SelectionMode="Single" SelectionChanged="ThumbnailsListView_OnSelectionChanged">
                     <ListView.ItemTemplate >
                         <DataTemplate>
                             <StackPanel>
@@ -30,12 +30,12 @@
             </StackPanel>
         </ScrollViewer>
         <TabControl Grid.Column="1" >
-            <TabItem Header="Current Image">
-                <!--<Image  Stretch="None" Source="{Binding AverageFaceResult}"/>-->
-            </TabItem>
-            <TabItem Header="Result">
+            <TabItem Header="Результат">
                 <Image  Stretch="None" Source="{Binding AverageFaceResult}"/>
-            </TabItem>    
+            </TabItem>
+            <TabItem Header="Текущее изображение">
+                 <Image  Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}"/> 
+            </TabItem>
         </TabControl>
         
     </Grid>
