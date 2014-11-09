@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls.Primitives;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using AP.Logic;
@@ -13,8 +14,9 @@ using Emgu.CV.Structure;
 using Microsoft.TeamFoundation.MVVM;
 using System.Windows.Media.Imaging;
 using Emgu.CV.WPF;
-using Microsoft.Win32;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Point = System.Windows.Point;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace AP.Gui
 {
@@ -32,10 +34,29 @@ namespace AP.Gui
 
         public ICommand PrepareAveragePortraitCommand { get; set; }
 
+        public ICommand SaveResultCommand { get; set; }
+
         public MainWindowViewModel()
         {
             OpenPhotosCommand = new RelayCommand(OpenPhotos);
             PrepareAveragePortraitCommand = new RelayCommand(PrepareAveragePortrait);
+            SaveResultCommand = new RelayCommand(SaveResult);
+        }
+
+        private void SaveResult()
+        {
+            var saveDialog = new SaveFileDialog();
+            saveDialog.DefaultExt = ".png";
+            saveDialog.Filter = "PNG Images|*.png";
+            if (saveDialog.ShowDialog() == false)
+            {
+                return;
+            }
+            var pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(AverageFaceResult));
+            var stream = saveDialog.OpenFile();
+            pngEncoder.Save(stream);
+            stream.Close();
         }
 
         private void OpenPhotos()
