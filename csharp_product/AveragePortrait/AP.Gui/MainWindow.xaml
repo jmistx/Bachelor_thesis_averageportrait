@@ -21,8 +21,22 @@
                         <DataTemplate>
                             <StackPanel>
                                 <Image Source="{Binding Tumbnail}" />
-                                <ListView ItemsSource="{Binding Face.Eyes}"></ListView>
-                                <TextBlock Text="{Binding Face.Transformation.AngleInDegrees}" ></TextBlock>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0">Левый глаз:</Label>
+                                    <TextBlock Grid.Column="1" Text="{Binding LeftEye}" ></TextBlock>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0">Правый глаз:</Label>
+                                    <TextBlock Grid.Column="1" Text="{Binding RightEye}" ></TextBlock>
+                                </Grid>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -34,7 +48,10 @@
                 <Image  Stretch="None" Source="{Binding AverageFaceResult}"/>
             </TabItem>
             <TabItem Header="Текущее изображение">
-                 <Image  Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}"/> 
+                 <Image  Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}" 
+                         MouseLeftButtonDown="FaceEdit_OnMouseLeftButtonDown"
+                         MouseRightButtonDown="FaceEdit_OnMouseRightButtonDown"
+                         /> 
             </TabItem>
         </TabControl>
         

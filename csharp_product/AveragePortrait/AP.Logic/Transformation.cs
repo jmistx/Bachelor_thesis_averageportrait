@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using Emgu.CV;
@@ -8,8 +10,14 @@ namespace AP.Logic
 {
     public class Transformation
     {
-        public static Transformation Construct(ICollection<Eye> eyes, ICollection<Eye> standardEyes = null, double width = 0)
+        public static Transformation Construct(Eye leftEye = null, Eye rightEye = null, ICollection<Eye> standardEyes = null, double width = 0)
         {
+            var eyes = new Collection<Eye>
+            {
+                leftEye,
+                rightEye
+            };
+
             var transformation = new Transformation();
             var sortedEyes = eyes.OrderBy(_ => _.X).ToList();
             var eyeVector = sortedEyes[0] - sortedEyes[1];

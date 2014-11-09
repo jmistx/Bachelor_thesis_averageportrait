@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
@@ -77,19 +79,54 @@ namespace AP.Gui
             CurrentFaceViewModel = face;
             RaisePropertyChanged("CurrentFaceViewModel");
         }
+
+        public void SetCurrentFaceLeftEye(Point position)
+        {
+            CurrentFaceViewModel.SetLeftEye(position);
+        }
+
+        public void SetCurrentFaceRightEye(Point position)
+        {
+            CurrentFaceViewModel.SetRightEye(position);
+        }
     }
 
-    public class FaceViewModel
+    public class FaceViewModel : ViewModelBase
     {
         public Face Face { get; set; }
         public BitmapSource Tumbnail { get; set; }
         public BitmapSource Picture { get; set; }
+
+        public String LeftEye { get { return Face.LeftEye.ToString(); } }
+        public String RightEye { get { return Face.RightEye.ToString(); } }
+
+        public void SetLeftEye(Point position)
+        {
+            var eye = new Eye
+            {
+                X = (float)position.X,
+                Y = (float)position.Y
+            };
+            Face.LeftEye = eye;
+            RaisePropertyChanged("LeftEye");
+        }
 
         public FaceViewModel(Face face)
         {
             Face = face;
             Tumbnail = BitmapSourceConvert.ToBitmapSource(face.Thumbnail);
             Picture = BitmapSourceConvert.ToBitmapSource(face.FaceBitmap);
+        }
+
+        public void SetRightEye(Point position)
+        {
+            var eye = new Eye
+            {
+                X = (float)position.X,
+                Y = (float)position.Y
+            };
+            Face.RightEye = eye;
+            RaisePropertyChanged("RightEye");
         }
     }
 }

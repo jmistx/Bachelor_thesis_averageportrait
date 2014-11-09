@@ -1,5 +1,10 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using System.Windows.Input;
+using ListView = System.Windows.Controls.ListView;
+using MessageBox = System.Windows.MessageBox;
 
 namespace AP.Gui
 {
@@ -26,9 +31,23 @@ namespace AP.Gui
 
         private void ThumbnailsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var items = e.AddedItems;
-            var face = items[0] as FaceViewModel;
+            var listView = sender as ListView;
+            Debug.Assert(listView != null, "listView != null");
+            if (listView.SelectedItems.Count <= 0) return;
+            var face = listView.SelectedItems[0] as FaceViewModel;
             ViewModel.SelectFaceForEdit(face);
+        }
+
+        private void FaceEdit_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var position = e.GetPosition(sender as IInputElement);
+            ViewModel.SetCurrentFaceLeftEye(position);
+        }
+
+        private void FaceEdit_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var position = e.GetPosition(sender as IInputElement);
+            ViewModel.SetCurrentFaceRightEye(position);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace AP.Logic
         {
             foreach (var face in faces)
             {
-                var transformation = Transformation.Construct(face.Eyes, standardEyes);
+                var transformation = Transformation.Construct(leftEye: face.LeftEye, rightEye: face.RightEye, standardEyes: standardEyes);
                 var rotationMatrix = transformation.AsMatrix<float>();
                 var faceBitmap = face.FaceBitmap.WarpAffine(rotationMatrix, _width, _height, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
                 var translationMatrix = new Matrix<float>(new float[,]
