@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
@@ -14,6 +14,7 @@ using Microsoft.TeamFoundation.MVVM;
 using System.Windows.Media.Imaging;
 using Emgu.CV.WPF;
 using Microsoft.Win32;
+using Point = System.Windows.Point;
 
 namespace AP.Gui
 {
@@ -98,6 +99,15 @@ namespace AP.Gui
         public BitmapSource Picture { get; set; }
 
         public String LeftEye { get { return Face.LeftEye.ToString(); } }
+
+        public double EyeSize { get { return 40; }}
+
+        public double LeftEyePositionX { get { return Face.LeftEye.X - EyeSize/2; } }
+        public double LeftEyePositionY { get { return Face.LeftEye.Y - EyeSize / 2; } }
+
+        public double RightEyePositionX { get { return Face.RightEye.X - EyeSize / 2; } }
+        public double RightEyePositionY { get { return Face.RightEye.Y - EyeSize / 2; } }
+
         public String RightEye { get { return Face.RightEye.ToString(); } }
 
         public void SetLeftEye(Point position)
@@ -109,6 +119,8 @@ namespace AP.Gui
             };
             Face.LeftEye = eye;
             RaisePropertyChanged("LeftEye");
+            RaisePropertyChanged("LeftEyePositionX");
+            RaisePropertyChanged("LeftEyePositionY");
         }
 
         public FaceViewModel(Face face)
@@ -127,6 +139,8 @@ namespace AP.Gui
             };
             Face.RightEye = eye;
             RaisePropertyChanged("RightEye");
+            RaisePropertyChanged("RightEyePositionX");
+            RaisePropertyChanged("RightEyePositionY");
         }
     }
 }

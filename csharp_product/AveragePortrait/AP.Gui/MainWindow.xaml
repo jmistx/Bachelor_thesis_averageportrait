@@ -48,10 +48,26 @@
                 <Image  Stretch="None" Source="{Binding AverageFaceResult}"/>
             </TabItem>
             <TabItem Header="Текущее изображение">
-                 <Image  Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}" 
-                         MouseLeftButtonDown="FaceEdit_OnMouseLeftButtonDown"
-                         MouseRightButtonDown="FaceEdit_OnMouseRightButtonDown"
-                         /> 
+                <Canvas>
+                    <Rectangle Canvas.ZIndex="2" 
+                               Width="{Binding CurrentFaceViewModel.EyeSize}"
+                               Height="{Binding CurrentFaceViewModel.EyeSize}" 
+                               Canvas.Left="{Binding CurrentFaceViewModel.LeftEyePositionX}" 
+                               Canvas.Top="{Binding CurrentFaceViewModel.LeftEyePositionY}" 
+                               Stroke="Red" StrokeThickness="4"/>
+                    
+                    <Rectangle Canvas.ZIndex="2" 
+                               Width="{Binding CurrentFaceViewModel.EyeSize}"
+                               Height="{Binding CurrentFaceViewModel.EyeSize}" 
+                               Canvas.Left="{Binding CurrentFaceViewModel.RightEyePositionX}" 
+                               Canvas.Top="{Binding CurrentFaceViewModel.RightEyePositionY}" 
+                               Stroke="Green" StrokeThickness="4"/>
+                    
+                    <Image  Canvas.ZIndex="1" Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}" 
+                             MouseLeftButtonDown="FaceEdit_OnMouseLeftButtonDown"
+                             MouseRightButtonDown="FaceEdit_OnMouseRightButtonDown"
+                             />
+                </Canvas>
             </TabItem>
         </TabControl>
         
