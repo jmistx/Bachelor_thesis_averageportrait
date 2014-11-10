@@ -49,5 +49,17 @@ namespace AP.Gui
             var position = e.GetPosition(sender as IInputElement);
             ViewModel.SetCurrentFaceRightEye(position);
         }
+
+        private void AverageFace_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var position = e.GetPosition(sender as IInputElement);
+            ViewModel.SetLeftStandardEye(position);
+        }
+
+        private void AverageFace_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var position = e.GetPosition(sender as IInputElement);
+            ViewModel.SetRightStandardEye(position);
+        }
     }
 }

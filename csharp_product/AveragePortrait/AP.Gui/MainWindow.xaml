@@ -3,21 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        Title="Портрет Гальтона" Height="600" Width="700" Loaded="Window_Loaded_1"
+        Title="Портрет Гальтона" Height="749" Width="880" Loaded="Window_Loaded_1"
         xmlns:gui="clr-namespace:AP.Gui"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=gui:MainWindowViewModel}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v" />
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0">
             <StackPanel>
                 <Button Command="{Binding OpenPhotosCommand}">Выбрать фотографии</Button>
                 <Button Command="{Binding PrepareAveragePortraitCommand}">Построить портрет</Button>
-                <ListView ItemsSource="{Binding FacesViewModel}" SelectionMode="Single" SelectionChanged="ThumbnailsListView_OnSelectionChanged">
-                    <ListView.ItemTemplate >
+                <ListView ItemsSource="{Binding FacesViewModel}" SelectionMode="Single"
+                          SelectionChanged="ThumbnailsListView_OnSelectionChanged">
+                    <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
                                 <Image Source="{Binding Tumbnail}" />
@@ -27,7 +32,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="0">Левый глаз:</Label>
-                                    <TextBlock Grid.Column="1" Text="{Binding LeftEye}" ></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="{Binding LeftEye}" />
                                 </Grid>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -35,7 +40,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="0">Правый глаз:</Label>
-                                    <TextBlock Grid.Column="1" Text="{Binding RightEye}" ></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="{Binding RightEye}" />
                                 </Grid>
                             </StackPanel>
                         </DataTemplate>
@@ -43,36 +48,64 @@
                 </ListView>
             </StackPanel>
         </ScrollViewer>
-        <TabControl Grid.Column="1" >
+        <TabControl Grid.Column="1">
             <TabItem Header="Результат">
                 <StackPanel>
                     <Button Command="{Binding SaveResultCommand}">Сохранить</Button>
-                    <Image  Stretch="None" Source="{Binding AverageFaceResult}"/>
+                    <CheckBox Name="IsEyesShowedBox">Показать места для глаз</CheckBox>
+                    <Canvas>
+                        <Rectangle Canvas.ZIndex="2"
+                                   Width="{Binding StandardEyeSize}"
+                                   Height="{Binding StandardEyeSize}"
+                                   Canvas.Left="{Binding LeftStandardEyeX}"
+                                   Canvas.Top="{Binding LeftStandardEyeY}"
+                                   Visibility="{Binding IsChecked, ElementName=IsEyesShowedBox,Converter={StaticResource b2v}}"
+                                   Stroke="SaddleBrown" StrokeThickness="2" />
+
+                        <Rectangle Canvas.ZIndex="2"
+                                   Width="{Binding StandardEyeSize}"
+                                   Height="{Binding StandardEyeSize}"
+                                   Canvas.Left="{Binding RightStandardEyeX}"
+                                   Canvas.Top="{Binding RightStandardEyeY}"
+                                   Visibility="{Binding IsChecked, ElementName=IsEyesShowedBox,Converter={StaticResource b2v}}"
+                                   Stroke="Orange" StrokeThickness="2" />
+                        <Rectangle Canvas.ZIndex="2"
+                                   Width="{Binding Width}"
+                                   Height="{Binding Height}"
+                                   Fill="Transparent"
+                                   Stroke="Black"
+                                   MouseLeftButtonDown="AverageFace_OnMouseLeftButtonDown"
+                                   MouseRightButtonDown="AverageFace_OnMouseRightButtonDown"
+                                   StrokeThickness="1" />
+
+                        <Image Canvas.ZIndex="1" Stretch="None" Source="{Binding AverageFaceResult}"
+                               Width="{Binding Width}"
+                               Height="{Binding Height}" />
+                    </Canvas>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Текущее изображение">
                 <Canvas>
-                    <Rectangle Canvas.ZIndex="2" 
+                    <Rectangle Canvas.ZIndex="2"
                                Width="{Binding CurrentFaceViewModel.EyeSize}"
-                               Height="{Binding CurrentFaceViewModel.EyeSize}" 
-                               Canvas.Left="{Binding CurrentFaceViewModel.LeftEyePositionX}" 
-                               Canvas.Top="{Binding CurrentFaceViewModel.LeftEyePositionY}" 
-                               Stroke="Red" StrokeThickness="4"/>
-                    
-                    <Rectangle Canvas.ZIndex="2" 
+                               Height="{Binding CurrentFaceViewModel.EyeSize}"
+                               Canvas.Left="{Binding CurrentFaceViewModel.LeftEyePositionX}"
+                               Canvas.Top="{Binding CurrentFaceViewModel.LeftEyePositionY}"
+                               Stroke="Red" StrokeThickness="2" />
+
+                    <Rectangle Canvas.ZIndex="2"
                                Width="{Binding CurrentFaceViewModel.EyeSize}"
-                               Height="{Binding CurrentFaceViewModel.EyeSize}" 
-                               Canvas.Left="{Binding CurrentFaceViewModel.RightEyePositionX}" 
-                               Canvas.Top="{Binding CurrentFaceViewModel.RightEyePositionY}" 
-                               Stroke="Green" StrokeThickness="4"/>
-                    
-                    <Image  Canvas.ZIndex="1" Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}" 
-                             MouseLeftButtonDown="FaceEdit_OnMouseLeftButtonDown"
-                             MouseRightButtonDown="FaceEdit_OnMouseRightButtonDown"
-                             />
+                               Height="{Binding CurrentFaceViewModel.EyeSize}"
+                               Canvas.Left="{Binding CurrentFaceViewModel.RightEyePositionX}"
+                               Canvas.Top="{Binding CurrentFaceViewModel.RightEyePositionY}"
+                               Stroke="Green" StrokeThickness="2" />
+
+                    <Image Canvas.ZIndex="1" Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}"
+                           MouseLeftButtonDown="FaceEdit_OnMouseLeftButtonDown"
+                           MouseRightButtonDown="FaceEdit_OnMouseRightButtonDown" />
                 </Canvas>
             </TabItem>
         </TabControl>
-        
+
     </Grid>
 </Window>

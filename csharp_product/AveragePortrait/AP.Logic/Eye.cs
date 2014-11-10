@@ -15,7 +15,7 @@ namespace AP.Logic
 
         public static Eye operator +(Eye left, Eye right)
         {
-            return new Eye
+            return new Eye  
             {
                 X = left.X + right.X,
                 Y = left.Y + right.Y

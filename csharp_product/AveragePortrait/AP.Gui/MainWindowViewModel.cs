@@ -22,6 +22,10 @@ namespace AP.Gui
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        public int Width {get { return 600; }}
+        public int Height {get { return 600; }}
+        
+        
         public BitmapSource AverageFaceResult { get; set; }
 
         public FaceViewModel CurrentFaceViewModel { get; set; }
@@ -35,6 +39,15 @@ namespace AP.Gui
         public ICommand PrepareAveragePortraitCommand { get; set; }
 
         public ICommand SaveResultCommand { get; set; }
+
+        private Eye _leftStandardEye = new Eye { X = 250, Y = 250 };
+        private Eye _rightStandardEye = new Eye { X = 350, Y = 250 };
+
+        public float StandardEyeSize { get { return 40; }}
+        public float LeftStandardEyeX { get { return _leftStandardEye.X - StandardEyeSize / 2; } }
+        public float LeftStandardEyeY { get { return _leftStandardEye.Y - StandardEyeSize / 2; } }
+        public float RightStandardEyeX { get { return _rightStandardEye.X - StandardEyeSize / 2; } }
+        public float RightStandardEyeY { get { return _rightStandardEye.Y - StandardEyeSize / 2; } }
 
         public MainWindowViewModel()
         {
@@ -85,11 +98,11 @@ namespace AP.Gui
 
         private void PrepareAveragePortrait()
         {
-            var averageFace = new AverageFace(600, 600);
+            var averageFace = new AverageFace(Width, Height);
             var standardEyes = new List<Eye>
                 {
-                    new Eye {X = 200, Y = 200},
-                    new Eye {X = 250, Y = 300}
+                    _leftStandardEye,
+                    _rightStandardEye
                 };
             averageFace.MakeAverage(Faces, standardEyes);
             AverageFaceResult = BitmapSourceConvert.ToBitmapSource(averageFace.Result);
@@ -110,6 +123,28 @@ namespace AP.Gui
         public void SetCurrentFaceRightEye(Point position)
         {
             CurrentFaceViewModel.SetRightEye(position);
+        }
+
+        public void SetLeftStandardEye(Point position)
+        {
+            _leftStandardEye.X = (float) position.X;
+            _leftStandardEye.Y = (float) position.Y;
+            _rightStandardEye.Y = (float) position.Y;
+            RaisePropertyChanged("LeftStandardEyeX");
+            RaisePropertyChanged("LeftStandardEyeY");
+            RaisePropertyChanged("RightStandardEyeX");
+            RaisePropertyChanged("RightStandardEyeY");
+        }
+
+        public void SetRightStandardEye(Point position)
+        {
+            _rightStandardEye.X = (float)position.X;
+            _rightStandardEye.Y = (float)position.Y;
+            _leftStandardEye.Y = (float)position.Y;
+            RaisePropertyChanged("LeftStandardEyeX");
+            RaisePropertyChanged("LeftStandardEyeY");
+            RaisePropertyChanged("RightStandardEyeX");
+            RaisePropertyChanged("RightStandardEyeY");
         }
     }
 
