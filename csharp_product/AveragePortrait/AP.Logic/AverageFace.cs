@@ -37,7 +37,7 @@ namespace AP.Logic
                 
                 if (drawEyes) DrawEyes(face);
 
-                var faceBitmap = face.FaceBitmap.WarpAffine(rotationMatrix, _width, _height, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
+                var faceBitmap = face.FaceBitmap.WarpAffine(rotationMatrix, face.FaceBitmap.Width, face.FaceBitmap.Height, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
                 var translationMatrix = new Matrix<float>(new float[,]
                 {
                     {1, 0, transformation.Translation.X},

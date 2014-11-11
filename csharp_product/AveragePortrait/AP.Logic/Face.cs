@@ -18,7 +18,7 @@ namespace AP.Logic
             Thumbnail = OriginalBitmap.Resize(200, 200, INTER.CV_INTER_LINEAR, preserveScale: true);
 
             var faces = faceProcessor.GetFaces(OriginalBitmap);
-            var face = faces.Single();
+            var face = faces.FirstOrDefault();
             if (cropFace)
             {
                 FaceBitmap = faceProcessor.GetRectFromImage(OriginalBitmap, face);
@@ -39,8 +39,8 @@ namespace AP.Logic
                 });
             }
 
-            LeftEye = Eyes.ElementAtOrDefault(0);
-            RightEye = Eyes.ElementAtOrDefault(1);
+            LeftEye = Eyes.ElementAtOrDefault(0) ?? new Eye();
+            RightEye = Eyes.ElementAtOrDefault(1) ?? new Eye();
         }
         public Eye LeftEye { get; set; }
         public Eye RightEye { get; set; } 

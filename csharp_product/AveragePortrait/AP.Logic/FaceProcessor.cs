@@ -31,12 +31,22 @@ namespace AP.Logic
             using (var gray = image.Convert<Gray, Byte>())
             {
                 var pairs = EyePair.DetectMultiScale(gray, 1.1, 10, new Size(20, 20), Size.Empty);
-                var pair = pairs.Single();
-                var eyes = Eye.DetectMultiScale(gray, 1.1, 10, new Size(20, 20), Size.Empty);
-                var filteredEyes = eyes.Where(_ => ContainEye(pair, _)).ToList();
-                var offsetedEyes = filteredEyes.Select(_ => OffsetEye(face, _)).ToList();
+                var pair = pairs.FirstOrDefault();
+                if (!pair.Size.IsEmpty)
+                {
+                    var eyes = Eye.DetectMultiScale(gray, 1.1, 10, new Size(20, 20), Size.Empty);
+                    if (eyes.Length < 2)
+                    {
+                        image.ROI = Rectangle.Empty;
+                        return new List<Rectangle> { new Rectangle(), new Rectangle() };
+                    }
+                    var filteredEyes = eyes.Where(_ => ContainEye(pair, _)).ToList();
+                    var offsetedEyes = filteredEyes.Select(_ => OffsetEye(face, _)).ToList();
+                    image.ROI = Rectangle.Empty;
+                    return offsetedEyes;
+                }
                 image.ROI = Rectangle.Empty;
-                return offsetedEyes;
+                return new List<Rectangle>{new Rectangle(), new Rectangle()};
             }
         }
 

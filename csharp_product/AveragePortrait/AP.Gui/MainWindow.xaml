@@ -85,25 +85,30 @@
                 </StackPanel>
             </TabItem>
             <TabItem Header="Текущее изображение">
-                <Canvas>
-                    <Rectangle Canvas.ZIndex="2"
-                               Width="{Binding CurrentFaceViewModel.EyeSize}"
-                               Height="{Binding CurrentFaceViewModel.EyeSize}"
-                               Canvas.Left="{Binding CurrentFaceViewModel.LeftEyePositionX}"
-                               Canvas.Top="{Binding CurrentFaceViewModel.LeftEyePositionY}"
-                               Stroke="Red" StrokeThickness="2" />
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Auto">
+                    <Canvas Width="{Binding ActualWidth,ElementName=Image}" Height="{Binding ActualHeight, ElementName=Image}">
+                        <Rectangle Canvas.ZIndex="2"
+                                   Width="{Binding CurrentFaceViewModel.EyeSize}"
+                                   Height="{Binding CurrentFaceViewModel.EyeSize}"
+                                   Canvas.Left="{Binding CurrentFaceViewModel.LeftEyePositionX}"
+                                   Canvas.Top="{Binding CurrentFaceViewModel.LeftEyePositionY}"
+                                   Stroke="Red" StrokeThickness="2" />
 
-                    <Rectangle Canvas.ZIndex="2"
-                               Width="{Binding CurrentFaceViewModel.EyeSize}"
-                               Height="{Binding CurrentFaceViewModel.EyeSize}"
-                               Canvas.Left="{Binding CurrentFaceViewModel.RightEyePositionX}"
-                               Canvas.Top="{Binding CurrentFaceViewModel.RightEyePositionY}"
-                               Stroke="Green" StrokeThickness="2" />
+                        <Rectangle Canvas.ZIndex="2"
+                                   Width="{Binding CurrentFaceViewModel.EyeSize}"
+                                   Height="{Binding CurrentFaceViewModel.EyeSize}"
+                                   Canvas.Left="{Binding CurrentFaceViewModel.RightEyePositionX}"
+                                   Canvas.Top="{Binding CurrentFaceViewModel.RightEyePositionY}"
+                                   Stroke="Green" StrokeThickness="2" />
 
-                    <Image Canvas.ZIndex="1" Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}"
-                           MouseLeftButtonDown="FaceEdit_OnMouseLeftButtonDown"
-                           MouseRightButtonDown="FaceEdit_OnMouseRightButtonDown" />
-                </Canvas>
+                        <Image Canvas.ZIndex="1" Stretch="None" Source="{Binding CurrentFaceViewModel.Picture}"
+                               x:Name="Image"
+                               MouseLeftButtonDown="FaceEdit_OnMouseLeftButtonDown"
+                               MouseRightButtonDown="FaceEdit_OnMouseRightButtonDown" />
+                    </Canvas>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
 

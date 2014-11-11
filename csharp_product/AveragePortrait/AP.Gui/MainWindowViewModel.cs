@@ -183,7 +183,7 @@ namespace AP.Gui
         {
             Face = face;
             Tumbnail = BitmapSourceConvert.ToBitmapSource(face.Thumbnail);
-            Picture = BitmapSourceConvert.ToBitmapSource(face.FaceBitmap);
+            Picture = BitmapSourceConvert.ToBitmapSource(face.OriginalBitmap);
         }
 
         public void SetRightEye(Point position)
