@@ -7,7 +7,33 @@ using Emgu.CV.Structure;
 
 namespace AP.Logic
 {
-    public class AverageFace
+    public interface IAverageFace
+    {
+        Image<Bgr, int> Result { get; }
+        void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false);
+        void Add(Image<Bgr, byte> image);
+        void MakeAverage();
+        Bitmap ResultBitmap { get; set; }
+    }
+
+    public class PureAverageFace : IAverageFace
+    {
+        public Bitmap ResultBitmap { get; set; }
+        public Image<Bgr, int> Result { get; private set; }
+        public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false)
+        {
+        }
+
+        public void Add(Image<Bgr, byte> image)
+        {
+        }
+
+        public void MakeAverage()
+        {
+        }
+    }
+
+    public class AverageFace : IAverageFace
     {
         private readonly int _width;
         private readonly int _height;
@@ -86,5 +112,7 @@ namespace AP.Logic
 
             _count = 1;
         }
+
+        public Bitmap ResultBitmap { get; set; }
     }
 }

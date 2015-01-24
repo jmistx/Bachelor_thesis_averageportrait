@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------
 
 using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
@@ -31,17 +32,23 @@ namespace Emgu.CV.WPF
       {
          using (System.Drawing.Bitmap source = image.Bitmap)
          {
-            IntPtr ptr = source.GetHbitmap(); //obtain the Hbitmap
-
-            BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                ptr,
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
-
-            DeleteObject(ptr); //release the HBitmap
-            return bs;
+             return ToBitmapSource(source);
          }
       }
+
+       public static BitmapSource ToBitmapSource(Bitmap source)
+       {
+           IntPtr ptr = source.GetHbitmap(); //obtain the Hbitmap
+
+           BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+               ptr,
+               IntPtr.Zero,
+               Int32Rect.Empty,
+               System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+
+           DeleteObject(ptr); //release the HBitmap
+           return bs;
+           
+       }
    }
 }

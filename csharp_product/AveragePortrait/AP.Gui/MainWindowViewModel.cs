@@ -105,7 +105,7 @@ namespace AP.Gui
                     _rightStandardEye
                 };
             averageFace.MakeAverage(Faces, standardEyes);
-            AverageFaceResult = BitmapSourceConvert.ToBitmapSource(averageFace.Result);
+            AverageFaceResult = BitmapSourceConvert.ToBitmapSource(averageFace.ResultBitmap);
             RaisePropertyChanged("AverageFaceResult");
         }
 
