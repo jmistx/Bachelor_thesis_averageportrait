@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Windows.Controls.Primitives;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using AP.Logic;
-using Emgu.CV;
-using Emgu.CV.Structure;
 using Microsoft.TeamFoundation.MVVM;
 using System.Windows.Media.Imaging;
 using Emgu.CV.WPF;
@@ -98,7 +90,7 @@ namespace AP.Gui
 
         private void PrepareAveragePortrait()
         {
-            var averageFace = new AverageFace(Width, Height);
+            var averageFace = new PureAverageFace(Width, Height);
             var standardEyes = new List<Eye>
                 {
                     _leftStandardEye,

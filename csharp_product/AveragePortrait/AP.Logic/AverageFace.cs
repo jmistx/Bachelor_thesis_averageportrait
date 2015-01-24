@@ -18,6 +18,10 @@ namespace AP.Logic
 
     public class PureAverageFace : IAverageFace
     {
+        public PureAverageFace(int width, int height)
+        {
+        }
+
         public Bitmap ResultBitmap { get; set; }
         public Image<Bgr, int> Result { get; private set; }
         public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false)

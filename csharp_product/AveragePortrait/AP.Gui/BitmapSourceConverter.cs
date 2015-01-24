@@ -38,6 +38,11 @@ namespace Emgu.CV.WPF
 
        public static BitmapSource ToBitmapSource(Bitmap source)
        {
+           if (source == null)
+           {
+               return null;
+           }
+
            IntPtr ptr = source.GetHbitmap(); //obtain the Hbitmap
 
            BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
