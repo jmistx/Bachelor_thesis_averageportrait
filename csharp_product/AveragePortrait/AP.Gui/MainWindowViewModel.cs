@@ -85,7 +85,7 @@ namespace AP.Gui
         {
             FacesViewModel = new List<FaceViewModel>();
 
-            var faceProcessor = new FaceProcessor();
+            IFaceProcessor faceProcessor = new FaceProcessor();
             Faces = images.Select(image => new Face(faceProcessor, image, cropFace)).ToList();
             
             foreach (var face in Faces)

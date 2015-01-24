@@ -8,11 +8,11 @@ using Emgu.CV.Structure;
 
 namespace AP.Logic
 {
-    public class FaceProcessor
+    public class FaceProcessor : IFaceProcessor
     {
-        public CascadeClassifier Face { get; set; }
-        public CascadeClassifier Eye { get; set; }
-        public CascadeClassifier EyePair { get; set; }
+        private CascadeClassifier Face { get; set; }
+        private CascadeClassifier Eye { get; set; }
+        private CascadeClassifier EyePair { get; set; }
 
         public FaceProcessor()
         {
@@ -85,24 +85,6 @@ namespace AP.Logic
         {
             return image.GetSubRect(rectangle);
         }
-
-        public static Image<Bgr, Byte> IncreaseImageSize(Image<Bgr, Byte> image, int w, int h)
-        {
-            var scaledImage = new Image<Bgr, Byte>(w, h, new Bgr(Color.Black));
-            if (image.Width > w || image.Height > h)
-            {
-                throw new SyntaxErrorException("Assertion");
-            }
-            var offsetX = (w - image.Width)/2;
-            var offsetY = (h - image.Height)/2;
-
-            scaledImage.ROI = new Rectangle(offsetX, offsetY, image.Width, image.Height);
-            image.CopyTo(scaledImage);
-            scaledImage.ROI = Rectangle.Empty;
-
-            return scaledImage;
-        }
-
 
     }
 }

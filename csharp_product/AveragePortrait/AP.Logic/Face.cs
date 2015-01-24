@@ -11,7 +11,7 @@ namespace AP.Logic
 {
     public class Face
     {
-        public Face(FaceProcessor faceProcessor, string imagePath, bool cropFace)
+        public Face(IFaceProcessor faceProcessor, string imagePath, bool cropFace)
         {
             Eyes = new List<Eye>();
             OriginalBitmap = new Image<Bgr, byte>(imagePath);
