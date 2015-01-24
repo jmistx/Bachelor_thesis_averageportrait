@@ -23,19 +23,6 @@ namespace Emgu.CV.WPF
       [DllImport("gdi32")]
       private static extern int DeleteObject(IntPtr o);
 
-      /// <summary>
-      /// Convert an IImage to a WPF BitmapSource. The result can be used in the Set Property of Image.Source
-      /// </summary>
-      /// <param name="image">The Emgu CV Image</param>
-      /// <returns>The equivalent BitmapSource</returns>
-      public static BitmapSource ToBitmapSource(IImage image)
-      {
-         using (System.Drawing.Bitmap source = image.Bitmap)
-         {
-             return ToBitmapSource(source);
-         }
-      }
-
        public static BitmapSource ToBitmapSource(Bitmap source)
        {
            if (source == null)

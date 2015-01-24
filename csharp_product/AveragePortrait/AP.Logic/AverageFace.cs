@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -9,10 +10,7 @@ namespace AP.Logic
 {
     public interface IAverageFace
     {
-        Image<Bgr, int> Result { get; }
         void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false);
-        void Add(Image<Bgr, byte> image);
-        void MakeAverage();
         Bitmap ResultBitmap { get; set; }
     }
 
@@ -21,23 +19,17 @@ namespace AP.Logic
         public PureAverageFace(int width, int height)
         {
         }
-
         public Bitmap ResultBitmap { get; set; }
-        public Image<Bgr, int> Result { get; private set; }
         public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false)
         {
-        }
-
-        public void Add(Image<Bgr, byte> image)
-        {
-        }
-
-        public void MakeAverage()
-        {
+            var bitmap = faces.First().OriginalBitmap.Clone() as Bitmap;
+            var g = Graphics.FromImage(bitmap);
+            g.FillRectangle(new SolidBrush(Color.Black), 100, 50, 100, 100);
+            ResultBitmap = bitmap;
         }
     }
 
-    public class AverageFace : IAverageFace
+    public class AverageFace 
     {
         private readonly int _width;
         private readonly int _height;
@@ -55,7 +47,7 @@ namespace AP.Logic
         private void DrawEyes(Face face)
         {
             foreach (var eye in face.Eyes)
-                face.FaceBitmap.Draw(new Rectangle((int)(eye.X - 10), (int)(eye.Y - 10), 20, 20), new Bgr(Color.Red), 2);
+                face.FaceBitmap_.Draw(new Rectangle((int)(eye.X - 10), (int)(eye.Y - 10), 20, 20), new Bgr(Color.Red), 2);
         }
 
         public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false)
@@ -67,7 +59,7 @@ namespace AP.Logic
                 
                 if (drawEyes) DrawEyes(face);
 
-                var faceBitmap = face.FaceBitmap.WarpAffine(rotationMatrix, face.FaceBitmap.Width, face.FaceBitmap.Height, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
+                var faceBitmap = face.FaceBitmap_.WarpAffine(rotationMatrix, face.FaceBitmap.Width, face.FaceBitmap.Height, INTER.CV_INTER_CUBIC, WARP.CV_WARP_DEFAULT, new Bgr(Color.Black));
                 var translationMatrix = new Matrix<float>(new float[,]
                 {
                     {1, 0, transformation.Translation.X},
