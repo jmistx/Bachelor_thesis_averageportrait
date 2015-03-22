@@ -32,18 +32,21 @@ namespace AP.Logic
         {
             var face = faces.First();
             var bitmap = new Bitmap(_width, _height);
+            //transform
             using (var g = Graphics.FromImage(bitmap))
             {
+                var matrix = new Matrix();
+                
                 float scale = (standardEyes[1].X - standardEyes[0].X) / (face.RightEye.X - face.LeftEye.X);
-                g.TranslateTransform((standardEyes[0].X - face.LeftEye.X * scale), (standardEyes[0].Y - face.LeftEye.Y * scale));
-                g.ScaleTransform(scale, scale);
-                g.TranslateTransform(face.LeftEye.X, face.LeftEye.Y);
+                matrix.Translate((standardEyes[0].X - face.LeftEye.X * scale), (standardEyes[0].Y - face.LeftEye.Y * scale));
+                matrix.Scale(scale, scale);
+                matrix.Translate(face.LeftEye.X, face.LeftEye.Y);
                 double x = face.RightEye.X - face.LeftEye.X;
                 double y = face.RightEye.Y - face.LeftEye.Y;
                 float angle =  (float) ((float) (180.0F*Math.Atan(y/x))/Math.PI);
-                g.RotateTransform(-angle);
-                g.TranslateTransform(-face.LeftEye.X, -face.LeftEye.Y);
-                
+                matrix.Rotate(-angle);
+                matrix.Translate(-face.LeftEye.X, -face.LeftEye.Y);
+                g.Transform = matrix;
                 g.DrawImage(face.OriginalBitmap, 0 ,0);
             }
             
