@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -33,24 +34,51 @@ namespace AP.Logic
             var face = faces.First();
             var bitmap = new Bitmap(_width, _height);
             //transform
+            var matrix = GetMatrixTransformToStandardEyes(standardEyes, face);
             using (var g = Graphics.FromImage(bitmap))
             {
-                var matrix = new Matrix();
-                
-                float scale = (standardEyes[1].X - standardEyes[0].X) / (face.RightEye.X - face.LeftEye.X);
-                matrix.Translate((standardEyes[0].X - face.LeftEye.X * scale), (standardEyes[0].Y - face.LeftEye.Y * scale));
-                matrix.Scale(scale, scale);
-                matrix.Translate(face.LeftEye.X, face.LeftEye.Y);
-                double x = face.RightEye.X - face.LeftEye.X;
-                double y = face.RightEye.Y - face.LeftEye.Y;
-                float angle =  (float) ((float) (180.0F*Math.Atan(y/x))/Math.PI);
-                matrix.Rotate(-angle);
-                matrix.Translate(-face.LeftEye.X, -face.LeftEye.Y);
                 g.Transform = matrix;
                 g.DrawImage(face.OriginalBitmap, 0 ,0);
             }
-            
+
+            //averaging
+            BitmapData bmData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            int stride = bmData.Stride;
+            System.IntPtr Scan0 = bmData.Scan0;
+            unsafe
+            {
+                byte* p = (byte*) (void*) Scan0;
+                int nOffset = stride - bitmap.Width*3;
+                int nWidth = bitmap.Width*3;
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    for (int x = 0; x < nWidth; x++)
+                    {
+                        p[0] = (byte) (255 - p[0]);
+                        ++p;
+                    }
+                    p += nOffset;
+                }
+            }
+            bitmap.UnlockBits(bmData);
             ResultBitmap = bitmap;
+        }
+
+        private static Matrix GetMatrixTransformToStandardEyes(IList<Eye> standardEyes, Face face)
+        {
+            var matrix = new Matrix();
+
+            float scale = (standardEyes[1].X - standardEyes[0].X)/(face.RightEye.X - face.LeftEye.X);
+            matrix.Translate((standardEyes[0].X - face.LeftEye.X*scale), (standardEyes[0].Y - face.LeftEye.Y*scale));
+            matrix.Scale(scale, scale);
+            matrix.Translate(face.LeftEye.X, face.LeftEye.Y);
+            double x = face.RightEye.X - face.LeftEye.X;
+            double y = face.RightEye.Y - face.LeftEye.Y;
+            float angle = (float) ((float) (180.0F*Math.Atan(y/x))/Math.PI);
+            matrix.Rotate(-angle);
+            matrix.Translate(-face.LeftEye.X, -face.LeftEye.Y);
+            return matrix;
         }
     }
 
