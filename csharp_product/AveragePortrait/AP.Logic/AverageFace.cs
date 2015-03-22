@@ -13,7 +13,7 @@ namespace AP.Logic
 {
     public interface IAverageFace
     {
-        void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false);
+        void MakeAverage(IList<Face> faces, IList<Eye> standardEyes, bool drawEyes = false);
         Bitmap ResultBitmap { get; set; }
     }
 
@@ -29,19 +29,56 @@ namespace AP.Logic
         }
 
         public Bitmap ResultBitmap { get; set; }
-        public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false)
+        public void MakeAverage(IList<Face> faces, IList<Eye> standardEyes, bool drawEyes = false)
         {
-            var face = faces.First();
+            var averageFace = new int[_width * 3, _height];
+            //var face = faces.First();
             var bitmap = new Bitmap(_width, _height);
-            //transform
-            var matrix = GetMatrixTransformToStandardEyes(standardEyes, face);
-            using (var g = Graphics.FromImage(bitmap))
+            foreach (var face in faces)
             {
-                g.Transform = matrix;
-                g.DrawImage(face.OriginalBitmap, 0 ,0);
+                var matrix = GetMatrixTransformToStandardEyes(standardEyes, face);
+                using (var g = Graphics.FromImage(bitmap))
+                {
+                    g.Transform = matrix;
+                    g.DrawImage(face.OriginalBitmap, 0, 0);
+                    AddBitmapToAverageFace(bitmap, averageFace);  
+                    g.Clear(Color.Black);
+                }
+                
             }
+            ResultBitmap = MakeAverageFaceBitmap(averageFace, faces.Count);
+        }
 
-            //averaging
+        private unsafe Bitmap MakeAverageFaceBitmap(int[,] averageFace, int facesCount)
+        {
+            var averageFaceBitmap = new Bitmap(_width, _height);
+
+            BitmapData abmData =
+                averageFaceBitmap.LockBits(new Rectangle(0, 0, averageFaceBitmap.Width, averageFaceBitmap.Height),
+                    ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            int stride1 = abmData.Stride;
+            System.IntPtr Scan01 = abmData.Scan0;
+            unsafe
+            {
+                byte* p = (byte*) (void*) Scan01;
+                int nOffset = stride1 - averageFaceBitmap.Width*3;
+                int nWidth = averageFaceBitmap.Width*3;
+                for (int y = 0; y < averageFaceBitmap.Height; y++)
+                {
+                    for (int x = 0; x < nWidth; x++)
+                    {
+                        p[0] = (byte) (averageFace[x, y]/facesCount);
+                        ++p;
+                    }
+                    p += nOffset;
+                }
+            }
+            averageFaceBitmap.UnlockBits(abmData);
+            return averageFaceBitmap;
+        }
+
+        private static unsafe void AddBitmapToAverageFace(Bitmap bitmap, int[,] averageFace)
+        {
             BitmapData bmData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
             int stride = bmData.Stride;
@@ -55,14 +92,13 @@ namespace AP.Logic
                 {
                     for (int x = 0; x < nWidth; x++)
                     {
-                        p[0] = (byte) (255 - p[0]);
+                        averageFace[x, y] += p[0];
                         ++p;
                     }
                     p += nOffset;
                 }
             }
             bitmap.UnlockBits(bmData);
-            ResultBitmap = bitmap;
         }
 
         private static Matrix GetMatrixTransformToStandardEyes(IList<Eye> standardEyes, Face face)
