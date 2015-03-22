@@ -78,22 +78,5 @@ namespace AP.Test
             Expect.FloatEquals(transformation.Scale, sameTransformation.Scale);
             Assert.AreEqual(transformation.Translation, sameTransformation.Translation);
         }
-
-        [Test]
-        public void CanBeCastedToMatrix()
-        {
-            var leftEye = new Eye{X = 3, Y = 4};
-            var rightEye = new Eye{X = (float) (3 + 6*Math.Cos(Math.PI/6)), Y = (float) (4 + 6 * Math.Sin(Math.PI/6))};
-            
-            var standardEyes = new List<Eye>
-            {
-                new Eye{X = 3, Y = 2},
-                new Eye{X = 9, Y = 2}
-            };
-
-            var transformation = Transformation.Construct(leftEye: leftEye, rightEye: rightEye, standardEyes: standardEyes);
-            transformation.AsMatrix<float>();
-            //Assert???!!!
-        }
     }
 }

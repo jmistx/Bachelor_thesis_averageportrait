@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -21,8 +22,21 @@ namespace AP.Gui
         }
         public MainWindow()
         {
-            InitializeComponent();
-            ViewModel = new MainWindowViewModel();
+            try
+            {
+                InitializeComponent();
+                ViewModel = new MainWindowViewModel();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)

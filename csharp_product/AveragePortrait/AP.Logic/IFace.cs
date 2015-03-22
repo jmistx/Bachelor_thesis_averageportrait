@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Drawing;
-using Emgu.CV;
-using Emgu.CV.Structure;
 
 namespace AP.Logic
 {
@@ -22,7 +20,7 @@ namespace AP.Logic
             double aspect = original.Height / (double)OriginalBitmap.Width;
             return new Bitmap(OriginalBitmap, 200, (int)(aspect * 200));
         }
-        public Face(IFaceProcessor faceProcessor, string image, bool cropFace)
+        public Face(string image)
         {
             OriginalBitmap = new Bitmap(image);
 
@@ -37,8 +35,6 @@ namespace AP.Logic
         public Bitmap OriginalBitmap { get; set; }
         public Bitmap Thumbnail { get; set; }
         public Bitmap FaceBitmap { get; set; }
-        public Image<Bgr, byte> FaceBitmap_ { get; set; }
-        public Transformation Transformation { get; set; }
         public List<Eye> Eyes { get; set; }
     }
 }
