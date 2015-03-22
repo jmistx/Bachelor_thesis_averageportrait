@@ -57,6 +57,7 @@ namespace AP.Logic
         public PointF Center { get; set; }
         public PointF Translation { get; set; }
 
+
         public Matrix<T> AsMatrix<T>() where T : struct
         {
             var matrix = new Emgu.CV.RotationMatrix2D<T>(Center, AngleInDegrees, Scale);

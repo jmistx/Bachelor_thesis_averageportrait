@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -16,15 +18,38 @@ namespace AP.Logic
 
     public class PureAverageFace : IAverageFace
     {
+        private readonly int _width;
+        private readonly int _height;
+
         public PureAverageFace(int width, int height)
         {
+            _width = width;
+            _height = height;
         }
+
         public Bitmap ResultBitmap { get; set; }
         public void MakeAverage(IEnumerable<Face> faces, IList<Eye> standardEyes, bool drawEyes = false)
         {
-            var bitmap = faces.First().OriginalBitmap.Clone() as Bitmap;
-            var g = Graphics.FromImage(bitmap);
-            g.FillRectangle(new SolidBrush(Color.Black), 100, 50, 100, 100);
+            var face = faces.First();
+            var bitmap = new Bitmap(_width, _height);
+            using (var g = Graphics.FromImage(bitmap))
+            {
+//                var transform = Transformation.Construct(face.LeftEye, face.RightEye, standardEyes, _width);
+                g.TranslateTransform(standardEyes[0].X - face.LeftEye.X, standardEyes[0].Y - face.LeftEye.Y);
+//                g.TranslateTransform(standardEyes[0].X, standardEyes[0].Y);
+//                g.DrawEllipse(new Pen(Color.Red), new Rectangle(0, 0, 10, 10));
+                g.TranslateTransform(face.LeftEye.X, face.LeftEye.Y);
+                double x = face.RightEye.X - face.LeftEye.X;
+                double y = face.RightEye.Y - face.LeftEye.Y;
+                float angle =  (float) ((float) (180.0F*Math.Atan(y/x))/Math.PI);
+                g.RotateTransform(-angle);
+//                g.TranslateTransform(-standardEyes[0].X, -standardEyes[0].Y);
+                g.TranslateTransform(-face.LeftEye.X, -face.LeftEye.Y);
+//                g.ScaleTransform(0.5F, 0.5F);
+                g.DrawImage(face.OriginalBitmap, 0 ,0);
+                //g.ScaleTransform((float)transform.Scale, (float)transform.Scale);
+            }
+            
             ResultBitmap = bitmap;
         }
     }
