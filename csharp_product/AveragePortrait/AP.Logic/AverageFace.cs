@@ -37,6 +37,7 @@ namespace AP.Logic
             foreach (var face in faces)
             {
                 var matrix = GetMatrixTransformToStandardEyes(standardEyes, face);
+                face.OriginalBitmap.SetResolution(96F, 96F);
                 using (var g = Graphics.FromImage(bitmap))
                 {
                     g.Transform = matrix;
